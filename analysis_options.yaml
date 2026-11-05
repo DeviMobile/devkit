@@ -1,0 +1,3 @@
+include:
+  - package:devimobile_devkit_lints/strict.yaml
+  - package:devimobile_devkit_lints/formatter.yaml

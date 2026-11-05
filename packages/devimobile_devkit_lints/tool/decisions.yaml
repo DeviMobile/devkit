@@ -1,0 +1,753 @@
+# Lint decisions: the single source of truth for core.yaml, strict.yaml and
+# RULES.md. After editing run `dart run tool/generate.dart`.
+#
+# Every rule from tool/sdk_rules.json that is not `removed` needs an entry.
+#   level: core   – prevents bugs; safe for any package or app
+#   level: strict – style and consistency for apps (strict.yaml = core + these)
+#   level: off    – not enabled; the reason says why
+# Policy: experimental and deprecated SDK rules stay off.
+
+always_declare_return_types:
+  level: core
+  reason: An omitted return type silently becomes `dynamic`.
+always_put_control_body_on_new_line:
+  level: off
+  reason: Layout belongs to the formatter.
+always_put_required_named_parameters_first:
+  level: off
+  reason: Conflicts with the Flutter convention of `key` first in widget constructors.
+always_specify_types:
+  level: off
+  reason: Annotating every type adds noise without catching bugs; we annotate only non-obvious types.
+always_use_package_imports:
+  level: strict
+  reason: One import style for `lib/`; a package URI reads the same from every file.
+annotate_overrides:
+  level: core
+  reason: Without `@override`, renaming a super member silently leaves a stale method behind.
+annotate_redeclares:
+  level: off
+  reason: Experimental in the SDK.
+async_return_with_no_await:
+  level: core
+  reason: Without `await`, errors of the returned future bypass the surrounding `try` and the frame is missing from stack traces.
+avoid_annotating_with_dynamic:
+  level: strict
+  reason: Writing `dynamic` where inference already gives it is noise.
+avoid_bool_literals_in_conditional_expressions:
+  level: strict
+  reason: "`c ? true : x` reads better as a boolean expression."
+avoid_catches_without_on_clauses:
+  level: off
+  reason: Catch-all handlers at error-reporting boundaries are intended; flagging each one trains people to ignore the rule.
+avoid_catching_errors:
+  level: strict
+  reason: An `Error` signals a programming bug; catching it hides the bug.
+avoid_classes_with_only_static_members:
+  level: off
+  reason: Design tokens are grouped as static constants of a class (`AppSpacing.md`); the namespace is the point.
+avoid_double_and_int_checks:
+  level: off
+  reason: Matters only when compiling to JavaScript; packages targeting the web can enable it.
+avoid_dynamic_calls:
+  level: core
+  reason: Calls on `dynamic` skip static checking and fail only at runtime.
+avoid_empty_else:
+  level: core
+  reason: "`else ;` usually means the next statement was meant to be conditional."
+avoid_equals_and_hash_code_on_mutable_classes:
+  level: strict
+  reason: Value equality on a mutable object breaks `Set` and `Map` lookups after mutation.
+avoid_escaping_inner_quotes:
+  level: strict
+  reason: Switching the outer quotes is easier to read than escapes.
+avoid_field_initializers_in_const_classes:
+  level: strict
+  reason: In a const class a getter makes it clear the value is not per-instance state.
+avoid_final_parameters:
+  level: off
+  reason: We neither require nor forbid `final` on parameters.
+avoid_function_literals_in_foreach_calls:
+  level: strict
+  reason: "`for-in` supports `await`, `break` and `return`; `forEach` with a closure does not."
+avoid_futureor_void:
+  level: off
+  reason: Experimental in the SDK.
+avoid_implementing_value_types:
+  level: strict
+  reason: Implementing a class with a custom `==` breaks its equality contract.
+avoid_init_to_null:
+  level: strict
+  reason: Nullable variables already start as `null`.
+avoid_js_rounded_ints:
+  level: off
+  reason: Matters only when compiling to JavaScript; packages targeting the web can enable it.
+avoid_multiple_declarations_per_line:
+  level: strict
+  reason: One declaration per line keeps diffs and reviews focused.
+avoid_null_checks_in_equality_operators:
+  level: off
+  reason: Deprecated in the SDK.
+avoid_positional_boolean_parameters:
+  level: strict
+  reason: "`f(true)` says nothing at the call site; a named parameter does."
+avoid_print:
+  level: core
+  reason: "`print` ends up in device logs of release builds; use a logger."
+avoid_private_typedef_functions:
+  level: off
+  reason: Deprecated in the SDK.
+avoid_redundant_argument_values:
+  level: strict
+  reason: Passing the default value hides which arguments actually matter.
+avoid_relative_lib_imports:
+  level: core
+  reason: Mixing relative and package imports of `lib/` can load one library twice, giving two distinct types.
+avoid_renaming_method_parameters:
+  level: strict
+  reason: Renamed parameters in overrides make inherited docs refer to names that do not exist.
+avoid_return_types_on_setters:
+  level: strict
+  reason: A setter's return type is always `void`.
+avoid_returning_null_for_void:
+  level: strict
+  reason: "`return null;` in a `void` function suggests a value that is never used."
+avoid_returning_this:
+  level: off
+  reason: Fluent builders are legitimate and cascades do not fit every API.
+avoid_setters_without_getters:
+  level: strict
+  reason: A write-only property is surprising; use a method.
+avoid_shadowing_type_parameters:
+  level: core
+  reason: A shadowed type parameter refers to a different type than it appears to.
+avoid_single_cascade_in_expression_statements:
+  level: strict
+  reason: A single cascade is a plain call written in a confusing way.
+avoid_slow_async_io:
+  level: off
+  reason: Async I/O keeps the UI isolate responsive; the speed difference rarely matters.
+avoid_type_to_string:
+  level: core
+  reason: Type names are minified in release builds, so logic or logs based on them break.
+avoid_types_as_parameter_names:
+  level: core
+  reason: "`(int) {}` declares a parameter named `int` of type `dynamic`, not an int."
+avoid_types_on_closure_parameters:
+  level: strict
+  reason: Closure parameter types are inferred from context.
+avoid_unnecessary_containers:
+  level: strict
+  reason: A `Container` with only a child adds a widget without effect.
+avoid_unused_constructor_parameters:
+  level: core
+  reason: An unused constructor parameter usually means a forgotten field assignment.
+avoid_void_async:
+  level: core
+  reason: An `async` function returning `void` cannot be awaited and its errors are lost; return `Future<void>`.
+avoid_web_libraries_in_flutter:
+  level: core
+  reason: Web-only imports break mobile builds.
+await_only_futures:
+  level: core
+  reason: Awaiting a non-future usually means a wrong type or a missing call.
+camel_case_extensions:
+  level: core
+  reason: Naming per Effective Dart; part of every package's public API.
+camel_case_types:
+  level: core
+  reason: Naming per Effective Dart; part of every package's public API.
+cancel_subscriptions:
+  level: core
+  reason: An uncancelled subscription leaks and keeps firing after dispose.
+cascade_invocations:
+  level: off
+  reason: Forcing cascades on consecutive calls often hurts readability.
+cast_nullable_to_non_nullable:
+  level: core
+  reason: "`x as T` on a nullable value hides a null check; use `!` or handle null."
+close_sinks:
+  level: core
+  reason: An unclosed sink leaks resources.
+collection_methods_unrelated_type:
+  level: core
+  reason: "`contains('1')` on a `List<int>` is always false."
+combinators_ordering:
+  level: strict
+  reason: Sorted `show`/`hide` names avoid merge conflicts.
+comment_references:
+  level: strict
+  reason: A broken `[reference]` in a doc comment silently renders as plain text.
+conditional_uri_does_not_exist:
+  level: core
+  reason: A missing conditional import fails only on the platform that selects it.
+constant_identifier_names:
+  level: core
+  reason: Naming per Effective Dart; part of every package's public API.
+control_flow_in_finally:
+  level: core
+  reason: "`return` or `break` in `finally` swallows the exception in flight."
+curly_braces_in_flow_control_structures:
+  level: core
+  reason: A body without braces invites the "second statement is not conditional" bug.
+dangling_library_doc_comments:
+  level: strict
+  reason: A doc comment attached to nothing is not shown by `dart doc`.
+depend_on_referenced_packages:
+  level: core
+  reason: Importing a transitive dependency breaks when that dependency changes.
+deprecated_consistency:
+  level: strict
+  reason: A deprecated field with a non-deprecated parameter (or the reverse) sends mixed signals.
+deprecated_member_use_from_same_package:
+  level: off
+  reason: A package keeps using its own deprecated API until removal; external users are still warned.
+diagnostic_describe_all_properties:
+  level: off
+  reason: Requires `debugFillProperties` boilerplate in every widget; little value in app code.
+directives_ordering:
+  level: strict
+  reason: A fixed import order avoids merge conflicts.
+discarded_futures:
+  level: off
+  reason: Flutter's sync callbacks (`initState`, `onPressed`) routinely start futures; `unawaited_futures` covers async bodies.
+do_not_use_environment:
+  level: off
+  reason: Apps read `--dart-define-from-file` configuration through `String.fromEnvironment` by design.
+document_ignores:
+  level: strict
+  reason: An `ignore` without a reason cannot be reviewed or removed later.
+empty_catches:
+  level: core
+  reason: A silently swallowed exception hides failures.
+empty_constructor_bodies:
+  level: strict
+  reason: "`;` instead of `{}` is the idiomatic empty body."
+empty_container_bodies:
+  level: strict
+  reason: "`;` instead of `{}` is the idiomatic empty body."
+empty_statements:
+  level: core
+  reason: A stray `;` after `if` makes the following block unconditional.
+eol_at_end_of_file:
+  level: strict
+  reason: A missing final newline produces noisy diffs.
+exhaustive_cases:
+  level: core
+  reason: A new constant of an enum-like class must not be silently ignored by a switch.
+file_names:
+  level: core
+  reason: Naming per Effective Dart; mixed-case file names break on case-insensitive file systems.
+flutter_style_todos:
+  level: strict
+  reason: A TODO with an owner and a link can be tracked.
+hash_and_equals:
+  level: core
+  reason: Overriding only one of `==` and `hashCode` breaks hash-based collections.
+implementation_imports:
+  level: core
+  reason: Another package's `src/` is not its public API and can change in any release.
+implicit_call_tearoffs:
+  level: strict
+  reason: An explicit `.call` tear-off shows that an object is used as a function.
+implicit_reopen:
+  level: off
+  reason: Experimental in the SDK.
+initialize_in_field_declaration:
+  level: strict
+  reason: Initializing at the declaration keeps the value next to the field.
+invalid_case_patterns:
+  level: off
+  reason: Experimental in the SDK and only useful for Dart 2 migrations.
+invalid_runtime_check_with_js_interop_types:
+  level: off
+  reason: Applies only to JS interop; packages targeting the web can enable it.
+join_return_with_assignment:
+  level: strict
+  reason: Assigning a local only to return it on the next line is noise.
+leading_newlines_in_multiline_strings:
+  level: strict
+  reason: Content starting on the next line keeps multiline strings aligned.
+library_annotations:
+  level: strict
+  reason: Library-level annotations belong on the `library` directive.
+library_names:
+  level: core
+  reason: Naming per Effective Dart; part of every package's public API.
+library_prefixes:
+  level: core
+  reason: Naming per Effective Dart; part of every package's public API.
+library_private_types_in_public_api:
+  level: core
+  reason: Callers cannot name a private type used in a public signature.
+lines_longer_than_80_chars:
+  level: off
+  reason: Line length belongs to the formatter.
+literal_only_boolean_expressions:
+  level: core
+  reason: "`if (true)` is dead code or a debugging leftover."
+matching_super_parameters:
+  level: strict
+  reason: A super parameter named differently from the super constructor's parameter misleads readers.
+missing_code_block_language_in_doc_comment:
+  level: strict
+  reason: Code blocks without a language get no highlighting in `dart doc`.
+missing_whitespace_between_adjacent_strings:
+  level: core
+  reason: "`'Hello' 'world'` renders as `Helloworld`."
+no_adjacent_strings_in_list:
+  level: core
+  reason: A missing comma between two strings silently merges two list elements.
+no_default_cases:
+  level: off
+  reason: Experimental in the SDK.
+no_duplicate_case_values:
+  level: core
+  reason: A duplicate case value is unreachable.
+no_dynamic_casts:
+  level: core
+  reason: Implicit casts from `dynamic` fail at runtime; an explicit `as` keeps them visible.
+no_leading_underscores_for_library_prefixes:
+  level: strict
+  reason: Library prefixes are not members, so privacy underscores mean nothing.
+no_leading_underscores_for_local_identifiers:
+  level: strict
+  reason: Locals are not members, so privacy underscores mean nothing.
+no_literal_bool_comparisons:
+  level: strict
+  reason: "`x == true` is a longer `x`."
+no_logic_in_create_state:
+  level: core
+  reason: "`createState` must only create the state; logic there runs at the wrong time."
+no_raw_types:
+  level: core
+  reason: A raw generic type silently uses its bounds and loses type information.
+no_runtimetype_tostring:
+  level: core
+  reason: "`runtimeType.toString()` is slow and minified in release builds."
+no_self_assignments:
+  level: core
+  reason: "`x = x` is always a mistake."
+no_wildcard_variable_uses:
+  level: core
+  reason: "`_` is a wildcard; reading it relies on pre-wildcard semantics."
+non_constant_identifier_names:
+  level: core
+  reason: Naming per Effective Dart; part of every package's public API.
+noop_primitive_operations:
+  level: strict
+  reason: Operations like `x.toString()` on a String do nothing.
+null_check_on_nullable_type_parameter:
+  level: core
+  reason: "`x!` on `T?` throws for a valid `null` when `T` itself is nullable."
+null_closures:
+  level: core
+  reason: Passing `null` where a closure is expected throws at runtime.
+omit_local_variable_types:
+  level: off
+  reason: An annotation on a non-obvious local can help readers; we forbid only obvious ones (`omit_obvious_local_variable_types`).
+omit_obvious_local_variable_types:
+  level: strict
+  reason: An annotation repeating an obvious type is noise.
+omit_obvious_property_types:
+  level: strict
+  reason: An annotation repeating an obvious type is noise.
+one_member_abstracts:
+  level: off
+  reason: Deprecated in the SDK.
+only_throw_errors:
+  level: core
+  reason: Throwing strings or other objects defeats `on` clauses and typed error handling.
+overridden_fields:
+  level: core
+  reason: An overriding field duplicates storage and hides the super field.
+package_names:
+  level: core
+  reason: Naming per Effective Dart; pub.dev requires it.
+package_prefixed_library_names:
+  level: off
+  reason: We do not name libraries at all (`unnecessary_library_name`).
+parameter_assignments:
+  level: strict
+  reason: Reassigning a parameter hides the original argument from the rest of the body.
+prefer_adjacent_string_concatenation:
+  level: strict
+  reason: Adjacent literals need no `+`.
+prefer_asserts_in_initializer_lists:
+  level: strict
+  reason: Asserts in the initializer list run before the constructor body.
+prefer_asserts_with_message:
+  level: off
+  reason: Assert conditions are usually self-explanatory; mandatory messages become restatements.
+prefer_collection_literals:
+  level: strict
+  reason: Literals are shorter and infer types better than constructors.
+prefer_conditional_assignment:
+  level: strict
+  reason: "`??=` states the intent directly."
+prefer_const_constructors:
+  level: strict
+  reason: Const instances are canonicalized, and const widgets are skipped on rebuild.
+prefer_const_constructors_in_immutables:
+  level: strict
+  reason: An immutable class with a const constructor can be used in const expressions.
+prefer_const_declarations:
+  level: strict
+  reason: "`const` makes a compile-time constant explicit."
+prefer_const_literals_to_create_immutables:
+  level: strict
+  reason: Const literals let the enclosing widget be const.
+prefer_constructors_over_static_methods:
+  level: strict
+  reason: A named constructor is the idiomatic way to create an instance.
+prefer_contains:
+  level: strict
+  reason: "`contains` states the intent better than `indexOf(x) != -1`."
+prefer_double_quotes:
+  level: off
+  reason: We use single quotes (`prefer_single_quotes`).
+prefer_expression_function_bodies:
+  level: off
+  reason: Forcing `=>` for every single-return body hurts readability of longer expressions.
+prefer_final_fields:
+  level: strict
+  reason: A private field that is never reassigned should say so.
+prefer_final_in_for_each:
+  level: strict
+  reason: A loop variable that is never reassigned should say so.
+prefer_final_locals:
+  level: strict
+  reason: A local that is never reassigned should say so.
+prefer_final_parameters:
+  level: off
+  reason: Deprecated in the SDK.
+prefer_for_elements_to_map_fromiterable:
+  level: strict
+  reason: A `for` element is clearer than `Map.fromIterable`.
+prefer_foreach:
+  level: off
+  reason: "`for-in` is our default loop (`avoid_function_literals_in_foreach_calls`)."
+prefer_function_declarations_over_variables:
+  level: strict
+  reason: A function declaration is clearer than a variable holding a closure.
+prefer_generic_function_type_aliases:
+  level: strict
+  reason: The `typedef F = ...` form is the current syntax.
+prefer_if_elements_to_conditional_expressions:
+  level: strict
+  reason: An `if` element is clearer than a conditional with an empty branch.
+prefer_if_null_operators:
+  level: strict
+  reason: "`??` states the intent directly."
+prefer_initializing_formals:
+  level: strict
+  reason: "`this.x` avoids repeating the assignment."
+prefer_inlined_adds:
+  level: strict
+  reason: Elements known upfront belong in the literal.
+prefer_int_literals:
+  level: strict
+  reason: "`1` instead of `1.0` where a double is inferred."
+prefer_interpolation_to_compose_strings:
+  level: strict
+  reason: Interpolation is easier to read than `+` chains.
+prefer_is_empty:
+  level: strict
+  reason: "`isEmpty` states the intent better than `length == 0`."
+prefer_is_not_empty:
+  level: strict
+  reason: "`isNotEmpty` reads better than `!isEmpty`."
+prefer_is_not_operator:
+  level: strict
+  reason: "`is!` reads better than `!(x is T)`."
+prefer_iterable_wheretype:
+  level: strict
+  reason: "`whereType<T>()` also gives the right static type."
+prefer_mixin:
+  level: strict
+  reason: Classes meant for mixing in should be declared with `mixin`.
+prefer_null_aware_method_calls:
+  level: strict
+  reason: "`f?.call()` instead of a null check followed by a call."
+prefer_null_aware_operators:
+  level: strict
+  reason: "`x?.y` instead of `x == null ? null : x.y`."
+prefer_relative_imports:
+  level: off
+  reason: We use package imports (`always_use_package_imports`).
+prefer_single_quotes:
+  level: strict
+  reason: One quote style across the codebase.
+prefer_spread_collections:
+  level: strict
+  reason: Spreads are clearer than `addAll` on a fresh literal.
+prefer_typing_uninitialized_variables:
+  level: core
+  reason: "`var x;` without an initializer is `dynamic`."
+prefer_void_to_null:
+  level: core
+  reason: "`Null` as a type is almost always meant to be `void`."
+provide_deprecation_message:
+  level: core
+  reason: A deprecation without a message does not tell users what to use instead.
+public_member_api_docs:
+  level: off
+  reason: Required for published packages but noise in apps; packages enable it in their own analysis options.
+recursive_getters:
+  level: core
+  reason: A getter returning itself recurses until stack overflow.
+remove_deprecations_in_breaking_versions:
+  level: core
+  reason: A major version is the moment to remove deprecated API.
+require_trailing_commas:
+  level: off
+  reason: The formatter owns trailing commas (`formatter.yaml`).
+secure_pubspec_urls:
+  level: core
+  reason: Plain `http` URLs in pubspec allow tampering in transit.
+simple_directive_paths:
+  level: strict
+  reason: Redundant `./` and `../` segments obscure where an import points.
+simplify_variable_pattern:
+  level: strict
+  reason: A pattern field repeating the variable name is noise.
+sized_box_for_whitespace:
+  level: strict
+  reason: "`SizedBox` is lighter than `Container` for spacing."
+sized_box_shrink_expand:
+  level: strict
+  reason: Named constructors state the intent of zero or infinite sizes.
+slash_for_doc_comments:
+  level: strict
+  reason: "`///` is the doc comment style."
+sort_child_properties_last:
+  level: strict
+  reason: "`child`/`children` last keeps widget trees readable."
+sort_constructors_first:
+  level: strict
+  reason: Constructors first makes a class easy to scan.
+sort_pub_dependencies:
+  level: off
+  reason: Templated pubspecs group dependencies in blocks; alphabetical order across blocks would break them.
+sort_unnamed_constructors_first:
+  level: strict
+  reason: The unnamed constructor first makes a class easy to scan.
+specify_nonobvious_local_variable_types:
+  level: off
+  reason: Flags nearly every local initialized from a call (44 hits in this repo's first 400 lines of tooling); IDEs show inferred types.
+specify_nonobvious_property_types:
+  level: strict
+  reason: A non-obvious property type should be visible in review.
+strict_top_level_inference:
+  level: core
+  reason: A member type that inference cannot determine silently becomes `dynamic`.
+switch_on_type:
+  level: core
+  reason: Switching on a `Type` object misses subtypes; switch on the value with type patterns.
+test_types_in_equals:
+  level: core
+  reason: "`operator ==` must not throw for arguments of another type."
+throw_in_finally:
+  level: core
+  reason: "`throw` in `finally` replaces the exception in flight."
+tighten_type_of_initializing_formals:
+  level: strict
+  reason: A formal can state the non-null type an assert already guarantees.
+type_annotate_public_apis:
+  level: off
+  reason: Covered by `strict_top_level_inference` and `specify_nonobvious_property_types`; incompatible with `omit_obvious_property_types`.
+type_init_formals:
+  level: strict
+  reason: "`this.x` already has the field's type."
+type_literal_in_constant_pattern:
+  level: core
+  reason: "`case int:` matches the `Type` object, not integers."
+unawaited_futures:
+  level: core
+  reason: A future that is neither awaited nor marked `unawaited` loses its errors.
+unintended_html_in_doc_comment:
+  level: strict
+  reason: "`List<int>` in a doc comment renders as an HTML tag; use backticks."
+unnecessary_async:
+  level: off
+  reason: Experimental in the SDK.
+unnecessary_await_in_return:
+  level: off
+  reason: Incompatible with `async_return_with_no_await`, which we use.
+unnecessary_brace_in_string_interps:
+  level: strict
+  reason: "`$x` instead of `${x}`."
+unnecessary_breaks:
+  level: strict
+  reason: Dart 3 switch cases do not fall through.
+unnecessary_const:
+  level: strict
+  reason: "`const` inside a const context is redundant."
+unnecessary_const_in_enum_constructor:
+  level: strict
+  reason: Enum constructors are always const.
+unnecessary_constructor_name:
+  level: strict
+  reason: "`.new` is redundant outside tear-offs."
+unnecessary_final:
+  level: off
+  reason: Incompatible with `prefer_final_locals`, which we use.
+unnecessary_getters_setters:
+  level: strict
+  reason: A field can become a getter later without breaking callers.
+unnecessary_ignore:
+  level: strict
+  reason: A stale `ignore` hides future occurrences of the diagnostic.
+unnecessary_lambdas:
+  level: strict
+  reason: A tear-off is shorter than a forwarding closure.
+unnecessary_late:
+  level: strict
+  reason: Top-level and static variables are already lazy.
+unnecessary_library_directive:
+  level: strict
+  reason: A bare `library;` adds nothing.
+unnecessary_library_name:
+  level: strict
+  reason: Library names are unnecessary since Dart 2.19.
+unnecessary_new:
+  level: strict
+  reason: "`new` is optional."
+unnecessary_null_aware_assignments:
+  level: strict
+  reason: "`x ??= null` does nothing."
+unnecessary_null_aware_operator_on_extension_on_nullable:
+  level: strict
+  reason: An extension on a nullable type already handles `null`.
+unnecessary_null_checks:
+  level: strict
+  reason: "`!` where a nullable value is accepted is noise."
+unnecessary_null_in_if_null_operators:
+  level: strict
+  reason: "`x ?? null` is `x`."
+unnecessary_nullable_for_final_variable_declarations:
+  level: strict
+  reason: A final variable initialized with a non-null value never holds `null`.
+unnecessary_overrides:
+  level: strict
+  reason: An override that only calls super adds nothing.
+unnecessary_parenthesis:
+  level: strict
+  reason: Redundant parentheses are noise.
+unnecessary_primary_constructor_body:
+  level: strict
+  reason: An empty primary constructor body adds nothing.
+unnecessary_raw_strings:
+  level: strict
+  reason: "`r''` without special characters is noise."
+unnecessary_statements:
+  level: core
+  reason: A statement without effect is usually a missing call or assignment.
+unnecessary_string_escapes:
+  level: strict
+  reason: Escapes that change nothing are noise.
+unnecessary_string_interpolations:
+  level: strict
+  reason: "`'$s'` for a String is `s`."
+unnecessary_this:
+  level: strict
+  reason: "`this.` is needed only to resolve shadowing."
+unnecessary_to_list_in_spreads:
+  level: strict
+  reason: A spread accepts any iterable.
+unnecessary_type_name_in_constructor:
+  level: off
+  reason: Requires the new `new ()` constructor syntax; revisit when the code generators we use emit it.
+unnecessary_unawaited:
+  level: strict
+  reason: "`unawaited` on a call whose result is marked `@awaitNotRequired` is noise."
+unnecessary_underscores:
+  level: strict
+  reason: A single `_` is a wildcard; `__` is no longer needed.
+unreachable_from_main:
+  level: off
+  reason: Applies only to libraries with `main`; our entry points are thin.
+unrelated_type_equality_checks:
+  level: core
+  reason: "`==` between unrelated types is always false."
+unsafe_variance:
+  level: off
+  reason: Experimental in the SDK.
+use_build_context_synchronously:
+  level: core
+  reason: A `BuildContext` used after an `await` may belong to an unmounted widget.
+use_colored_box:
+  level: strict
+  reason: "`ColoredBox` is lighter than a `Container` with only a color."
+use_declaring_parameters:
+  level: off
+  reason: Requires primary constructors; revisit when the code generators we use support them.
+use_decorated_box:
+  level: strict
+  reason: "`DecoratedBox` is lighter than a `Container` with only a decoration."
+use_enums:
+  level: strict
+  reason: An enum-like class should be an enum.
+use_full_hex_values_for_flutter_colors:
+  level: strict
+  reason: An 8-digit hex value makes the alpha channel explicit.
+use_function_type_syntax_for_parameters:
+  level: strict
+  reason: "`void Function(int) f` is the current syntax."
+use_if_null_to_convert_nulls_to_bools:
+  level: off
+  reason: Deprecated in the SDK.
+use_is_even_rather_than_modulo:
+  level: strict
+  reason: "`isEven` states the intent better than `% 2 == 0`."
+use_key_in_widget_constructors:
+  level: strict
+  reason: Public widgets should accept a `key`.
+use_late_for_private_fields_and_variables:
+  level: off
+  reason: Experimental in the SDK.
+use_named_constants:
+  level: strict
+  reason: "`Duration.zero` instead of `Duration()`."
+use_null_aware_elements:
+  level: strict
+  reason: "`?x` in a collection instead of `if (x != null) x`."
+use_primary_constructors:
+  level: off
+  reason: Experimental in the SDK.
+use_raw_strings:
+  level: strict
+  reason: A raw string is easier to read than many escapes.
+use_rethrow_when_possible:
+  level: core
+  reason: "`throw e` resets the stack trace; `rethrow` keeps it."
+use_setters_to_change_properties:
+  level: off
+  reason: Frequent false positives on methods that do more than set a field.
+use_string_buffers:
+  level: strict
+  reason: "`StringBuffer` avoids quadratic string building in loops."
+use_string_in_part_of_directives:
+  level: strict
+  reason: "`part of 'file.dart'` does not depend on library names."
+use_super_parameters:
+  level: off
+  reason: Experimental in the SDK.
+use_test_throws_matchers:
+  level: strict
+  reason: "`throwsA` reports more than `try`/`fail`."
+use_to_and_as_if_applicable:
+  level: off
+  reason: A naming heuristic with frequent false positives.
+use_truncating_division:
+  level: strict
+  reason: "`~/` instead of `(a / b).toInt()`."
+valid_regexps:
+  level: core
+  reason: An invalid regular expression throws at runtime.
+var_with_no_type_annotation:
+  level: off
+  reason: Experimental in the SDK.
+void_checks:
+  level: core
+  reason: Assigning a value to `void` hides a result that may matter.

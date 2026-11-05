@@ -1,0 +1,11 @@
+# Formatter settings, kept apart from the lint rule sets so that adopting the
+# lints never changes how code is formatted. Include it explicitly:
+#
+#   include:
+#     - package:devimobile_devkit_lints/strict.yaml
+#     - package:devimobile_devkit_lints/formatter.yaml
+
+formatter:
+  # Keep trailing commas written by hand, so a widget tree split over several
+  # lines stays split instead of being joined back onto one line.
+  trailing_commas: preserve

@@ -1,0 +1,11 @@
+name: devimobile_devkit_workspace
+publish_to: none
+
+environment:
+  sdk: ^3.13.0
+
+workspace:
+  - packages/devimobile_devkit_lints
+
+dev_dependencies:
+  devimobile_devkit_lints: ^0.1.0
