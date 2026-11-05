@@ -1,3 +1,8 @@
 include:
   - package:devimobile_devkit_lints/strict.yaml
   - package:devimobile_devkit_lints/formatter.yaml
+
+analyzer:
+  exclude:
+    # Example workspaces used by e2e tests; resolved only in temp copies.
+    - packages/*/test_fixtures/**
