@@ -108,9 +108,6 @@ name: root
 workspace:
   - packages/missing
 ''');
-    expect(
-      () => Workspace.discover(root),
-      throwsA(isA<DevkitException>()),
-    );
+    expect(() => Workspace.discover(root), throwsA(isA<DevkitException>()));
   });
 }

@@ -24,5 +24,6 @@ dart run devimobile_devkit_cli:devkit coverage
 Pull request titles follow [Conventional Commits](https://www.conventionalcommits.org/);
 pull requests are squash-merged.
 
-See [PROVENANCE.md](PROVENANCE.md) for how code enters this repository and
+Releases and the one-time setup: [RELEASING.md](RELEASING.md). See
+[PROVENANCE.md](PROVENANCE.md) for how code enters this repository and
 [SECURITY.md](SECURITY.md) for reporting vulnerabilities.

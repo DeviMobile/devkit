@@ -21,9 +21,10 @@ String formatTable(
         : text.padRight(widths[column]);
   }
 
-  String format(List<String> row) => [
-    for (var column = 0; column < header.length; column++) cell(row, column),
-  ].join('  ').trimRight();
+  String format(List<String> row) =>
+      [for (var column = 0; column < header.length; column++) cell(row, column)]
+          .join('  ')
+          .trimRight();
 
   return [
     format(header),

@@ -1,6 +1,6 @@
-include:
-  - package:devimobile_devkit_lints/strict.yaml
-  - package:devimobile_devkit_lints/formatter.yaml
+# No formatter.yaml here: published packages must match the default
+# `dart format`, which pana checks without our settings.
+include: package:devimobile_devkit_lints/strict.yaml
 
 analyzer:
   exclude:

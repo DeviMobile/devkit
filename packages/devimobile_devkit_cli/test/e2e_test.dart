@@ -12,7 +12,7 @@ import 'support.dart';
 
 /// Runs devkit on a copy of `test_fixtures/workspace`: a Dart package that
 /// passes, one with a failing test, a Flutter package and one without tests.
-/// Needs `flutter` on PATH and the fixture's dependencies in the pub cache.
+/// Needs `flutter` on PATH; resolving the fixture may use the network.
 void main() {
   late String root;
 
@@ -20,7 +20,7 @@ void main() {
     root = await _copyFixture();
     final result = await Process.run(
       'flutter',
-      ['pub', 'get', '--offline'],
+      ['pub', 'get'],
       workingDirectory: root,
       runInShell: Platform.isWindows,
     );

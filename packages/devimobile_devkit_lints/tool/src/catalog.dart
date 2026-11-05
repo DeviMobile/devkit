@@ -168,9 +168,7 @@ List<String> validate(SdkCatalog catalog, Map<String, Decision> decisions) {
         '${decision.name}: removed from the SDK; remove the decision',
       );
     } else if (decision.isEnabled && rule.state != 'stable') {
-      problems.add(
-        '${decision.name}: ${rule.state} rules must stay off',
-      );
+      problems.add('${decision.name}: ${rule.state} rules must stay off');
     }
     if (decision.reason.trim().isEmpty) {
       problems.add('${decision.name}: empty reason');

@@ -34,6 +34,8 @@ dart fix --apply
 
 Formatter settings live in their own file, so adopting the lints never changes
 how your code is formatted unless you include `formatter.yaml` explicitly.
+Don't include it in packages you publish: pub.dev scores formatting with the
+default `dart format` settings.
 
 The sets do not exclude generated files; add your own `analyzer: exclude:`
 entries (for example `**/*.g.dart`) next to the `include`.

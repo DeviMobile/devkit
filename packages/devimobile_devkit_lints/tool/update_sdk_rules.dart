@@ -2,9 +2,12 @@
 //
 //   dart run tool/update_sdk_rules.dart              SDK running this script
 //   dart run tool/update_sdk_rules.dart --sdk 3.13.7
+//   dart run tool/update_sdk_rules.dart --only-if-rules-changed
 //
-// Afterwards run `dart test`: rules without a decision fail the completeness
-// test until they get one in tool/decisions.yaml.
+// With --only-if-rules-changed the file is left alone when the rules are the
+// same as in the current snapshot (an SDK patch release usually changes
+// nothing). Afterwards run `dart test`: rules without a decision fail the
+// completeness test until they get one in tool/decisions.yaml.
 import 'dart:convert';
 import 'dart:io';
 
@@ -15,6 +18,7 @@ Future<void> main(List<String> args) async {
   final sdk = sdkIndex >= 0 && sdkIndex + 1 < args.length
       ? args[sdkIndex + 1]
       : Platform.version.split(' ').first;
+  final onlyIfChanged = args.contains('--only-if-rules-changed');
 
   final url = SdkCatalog.sourceUrl(sdk);
   final client = HttpClient();
@@ -33,9 +37,26 @@ Future<void> main(List<String> args) async {
         .toList();
     final catalog = SdkCatalog(sdk: sdk, source: url, rules: rules);
     final target = File.fromUri(Platform.script.resolve('sdk_rules.json'));
+
+    if (onlyIfChanged && target.existsSync()) {
+      final current = SdkCatalog.parse(target.readAsStringSync());
+      if (_rulesJson(current) == _rulesJson(catalog)) {
+        stdout.writeln(
+          'SDK $sdk has the same lint rules as SDK ${current.sdk}; '
+          'tool/sdk_rules.json unchanged',
+        );
+        return;
+      }
+    }
+
     target.writeAsStringSync(catalog.toJsonString());
     stdout.writeln('tool/sdk_rules.json: ${rules.length} rules from SDK $sdk');
   } finally {
     client.close();
   }
+}
+
+String _rulesJson(SdkCatalog catalog) {
+  final sorted = [...catalog.rules]..sort((a, b) => a.name.compareTo(b.name));
+  return jsonEncode([for (final rule in sorted) rule.toJson()]);
 }

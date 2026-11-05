@@ -53,9 +53,9 @@ void main() {
           loadYaml(File('pubspec.yaml').readAsStringSync()) as YamlMap;
       final environment = pubspec['environment'] as YamlMap;
       final constraint = environment['sdk'] as String;
-      final lowerBound = RegExp(
-        r'(\d+\.\d+\.\d+)',
-      ).firstMatch(constraint)!.group(1)!;
+      final lowerBound = RegExp(r'(\d+\.\d+\.\d+)')
+          .firstMatch(constraint)!
+          .group(1)!;
       expect(
         compareVersions(lowerBound, minimumSdk(catalog, decisions)),
         greaterThanOrEqualTo(0),
@@ -81,13 +81,10 @@ void main() {
     });
 
     test('reports decisions for unknown and removed rules', () {
-      final problems = validate(
-        catalogOf([rule('gone', state: 'removed')]),
-        {
-          'gone': decide('gone', Level.off),
-          'typo': decide('typo', Level.off),
-        },
-      );
+      final problems = validate(catalogOf([rule('gone', state: 'removed')]), {
+        'gone': decide('gone', Level.off),
+        'typo': decide('typo', Level.off),
+      });
       expect(problems, [
         contains('gone: removed from the SDK'),
         contains('typo: not in the SDK'),
