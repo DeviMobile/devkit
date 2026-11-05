@@ -1,0 +1,14 @@
+name: dart_ok
+publish_to: none
+
+environment:
+  sdk: ^3.13.0
+
+resolution: workspace
+
+dev_dependencies:
+  test: any
+
+devkit:
+  coverage:
+    min: 40

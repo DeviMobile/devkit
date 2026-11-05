@@ -1,0 +1,116 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions: {}
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  checks:
+    name: Format, analyze, generated files
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          flutter-version-file: .fvmrc
+          cache: true
+      - run: dart pub get
+      - run: dart format --output=none --set-exit-if-changed .
+      - run: dart analyze --fatal-infos
+      - run: dart run tool/generate.dart --check
+        working-directory: packages/devimobile_devkit_lints
+
+  test:
+    name: Tests (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          flutter-version-file: .fvmrc
+          cache: true
+      - run: dart pub get
+      # Includes the e2e tests on an example workspace (Dart, Flutter, failing).
+      - run: dart run devimobile_devkit_cli:devkit test --coverage
+      - run: dart run devimobile_devkit_cli:devkit coverage
+
+  min-sdk:
+    name: Minimum Dart SDK
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1.8.1
+        with:
+          sdk: 3.13.0
+      - run: dart pub get
+      # Fails on any enabled rule this SDK does not know (undefined_lint).
+      - run: dart analyze --fatal-infos
+      # No Flutter here, so no .fvmrc check and no e2e tests.
+      - run: dart run devimobile_devkit_cli:devkit test --no-fvm-check -- --exclude-tags e2e
+
+  latest-sdk:
+    name: Lint catalog of the latest stable SDK
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1.8.1
+        with:
+          sdk: stable
+      - run: dart pub get
+      # A new SDK rule without a decision fails here until it is decided
+      # (the weekly new-lints workflow opens that PR).
+      - run: dart run tool/update_sdk_rules.dart
+        working-directory: packages/devimobile_devkit_lints
+      - run: dart test --plain-name 'has a valid decision for every rule'
+        working-directory: packages/devimobile_devkit_lints
+
+  publish-checks:
+    name: Publish dry run and pana
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        package: [devimobile_devkit_lints, devimobile_devkit_cli]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          flutter-version-file: .fvmrc
+          cache: true
+      - run: dart pub get
+      - run: dart pub publish --dry-run
+        working-directory: packages/${{ matrix.package }}
+      - run: dart pub global activate pana 0.23.19
+      # Every pana point is required.
+      - run: dart pub global run pana --no-warning --exit-code-threshold 0 packages/${{ matrix.package }}

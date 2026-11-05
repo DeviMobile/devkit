@@ -1,0 +1,2142 @@
+{
+  "sdk": "3.13.7",
+  "source": "https://raw.githubusercontent.com/dart-lang/sdk/3.13.7/pkg/linter/tool/machine/rules.json",
+  "rules": [
+    {
+      "name": "always_declare_return_types",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Declare method return types."
+    },
+    {
+      "name": "always_put_control_body_on_new_line",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Separate the control structure expression from its statement."
+    },
+    {
+      "name": "always_put_required_named_parameters_first",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Put required named parameters first."
+    },
+    {
+      "name": "always_require_non_null_named_parameters",
+      "state": "removed",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Specify `@required` on named parameters without defaults."
+    },
+    {
+      "name": "always_specify_types",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [
+        "avoid_types_on_closure_parameters",
+        "omit_local_variable_types",
+        "omit_obvious_local_variable_types",
+        "omit_obvious_property_types"
+      ],
+      "description": "Specify type annotations."
+    },
+    {
+      "name": "always_use_package_imports",
+      "state": "stable",
+      "sinceDartSdk": "2.10",
+      "fixStatus": "hasFix",
+      "incompatible": [
+        "prefer_relative_imports"
+      ],
+      "description": "Avoid relative imports for files in `lib/`."
+    },
+    {
+      "name": "annotate_overrides",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Annotate overridden members."
+    },
+    {
+      "name": "annotate_redeclares",
+      "state": "experimental",
+      "sinceDartSdk": "3.2",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Annotate redeclared members."
+    },
+    {
+      "name": "async_return_with_no_await",
+      "state": "stable",
+      "sinceDartSdk": "3.13",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Return with no await."
+    },
+    {
+      "name": "avoid_annotating_with_dynamic",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid annotating with `dynamic` when not required."
+    },
+    {
+      "name": "avoid_as",
+      "state": "removed",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid using `as`."
+    },
+    {
+      "name": "avoid_bool_literals_in_conditional_expressions",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid `bool` literals in conditional expressions."
+    },
+    {
+      "name": "avoid_catches_without_on_clauses",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid catches without on clauses."
+    },
+    {
+      "name": "avoid_catching_errors",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Don't explicitly catch `Error` or types that implement it."
+    },
+    {
+      "name": "avoid_classes_with_only_static_members",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid defining a class that contains only static members."
+    },
+    {
+      "name": "avoid_double_and_int_checks",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Avoid `double` and `int` checks."
+    },
+    {
+      "name": "avoid_dynamic_calls",
+      "state": "stable",
+      "sinceDartSdk": "2.12",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid method calls or property accesses on a `dynamic` target."
+    },
+    {
+      "name": "avoid_empty_else",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid empty statements in else clauses."
+    },
+    {
+      "name": "avoid_equals_and_hash_code_on_mutable_classes",
+      "state": "stable",
+      "sinceDartSdk": "2.6",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid overloading operator == and hashCode on classes not marked `@immutable`."
+    },
+    {
+      "name": "avoid_escaping_inner_quotes",
+      "state": "stable",
+      "sinceDartSdk": "2.8",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid escaping inner quotes by converting surrounding quotes."
+    },
+    {
+      "name": "avoid_field_initializers_in_const_classes",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid field initializers in const classes."
+    },
+    {
+      "name": "avoid_final_parameters",
+      "state": "stable",
+      "sinceDartSdk": "2.16",
+      "fixStatus": "hasFix",
+      "incompatible": [
+        "prefer_final_parameters"
+      ],
+      "description": "Avoid `final` for parameter declarations."
+    },
+    {
+      "name": "avoid_function_literals_in_foreach_calls",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid using `forEach` with a function literal."
+    },
+    {
+      "name": "avoid_futureor_void",
+      "state": "experimental",
+      "sinceDartSdk": "3.6",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid using 'FutureOr<void>' as the type of a result."
+    },
+    {
+      "name": "avoid_implementing_value_types",
+      "state": "stable",
+      "sinceDartSdk": "2.1",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Don't implement classes that override `==`."
+    },
+    {
+      "name": "avoid_init_to_null",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Don't explicitly initialize variables to `null`."
+    },
+    {
+      "name": "avoid_js_rounded_ints",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid JavaScript rounded ints."
+    },
+    {
+      "name": "avoid_multiple_declarations_per_line",
+      "state": "stable",
+      "sinceDartSdk": "2.13",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Don't declare multiple variables on a single line."
+    },
+    {
+      "name": "avoid_null_checks_in_equality_operators",
+      "state": "deprecated",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Don't check for `null` in custom `==` operators."
+    },
+    {
+      "name": "avoid_positional_boolean_parameters",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid positional boolean parameters."
+    },
+    {
+      "name": "avoid_print",
+      "state": "stable",
+      "sinceDartSdk": "2.5",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid `print` calls in production code."
+    },
+    {
+      "name": "avoid_private_typedef_functions",
+      "state": "deprecated",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid private typedef functions."
+    },
+    {
+      "name": "avoid_redundant_argument_values",
+      "state": "stable",
+      "sinceDartSdk": "2.8",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid redundant argument values."
+    },
+    {
+      "name": "avoid_relative_lib_imports",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid relative imports for files in `lib/`."
+    },
+    {
+      "name": "avoid_renaming_method_parameters",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Don't rename parameters of overridden methods."
+    },
+    {
+      "name": "avoid_return_types_on_setters",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid return types on setters."
+    },
+    {
+      "name": "avoid_returning_null",
+      "state": "removed",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid returning null from members whose return type is bool, double, int, or num."
+    },
+    {
+      "name": "avoid_returning_null_for_future",
+      "state": "removed",
+      "sinceDartSdk": "2.1",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid returning null for Future."
+    },
+    {
+      "name": "avoid_returning_null_for_void",
+      "state": "stable",
+      "sinceDartSdk": "2.1",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid returning `null` for `void`."
+    },
+    {
+      "name": "avoid_returning_this",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid returning this from methods just to enable a fluent interface."
+    },
+    {
+      "name": "avoid_setters_without_getters",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Avoid setters without getters."
+    },
+    {
+      "name": "avoid_shadowing_type_parameters",
+      "state": "stable",
+      "sinceDartSdk": "2.1",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid shadowing type parameters."
+    },
+    {
+      "name": "avoid_single_cascade_in_expression_statements",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid single cascade in expression statements."
+    },
+    {
+      "name": "avoid_slow_async_io",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Avoid slow asynchronous `dart:io` methods."
+    },
+    {
+      "name": "avoid_type_to_string",
+      "state": "stable",
+      "sinceDartSdk": "2.12",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid <Type>.toString() in production code since results may be minified."
+    },
+    {
+      "name": "avoid_types_as_parameter_names",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid types as parameter names."
+    },
+    {
+      "name": "avoid_types_on_closure_parameters",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [
+        "always_specify_types"
+      ],
+      "description": "Avoid annotating types for function expression parameters."
+    },
+    {
+      "name": "avoid_unnecessary_containers",
+      "state": "stable",
+      "sinceDartSdk": "2.7",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid unnecessary containers."
+    },
+    {
+      "name": "avoid_unstable_final_fields",
+      "state": "removed",
+      "sinceDartSdk": "3.3",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid overriding a final field to return different values if called multiple times."
+    },
+    {
+      "name": "avoid_unused_constructor_parameters",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid defining unused parameters in constructors."
+    },
+    {
+      "name": "avoid_void_async",
+      "state": "stable",
+      "sinceDartSdk": "2.1",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid `async` functions that return `void`."
+    },
+    {
+      "name": "avoid_web_libraries_in_flutter",
+      "state": "stable",
+      "sinceDartSdk": "2.6",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid using web-only libraries outside Flutter web plugin packages."
+    },
+    {
+      "name": "await_only_futures",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Await only futures."
+    },
+    {
+      "name": "camel_case_extensions",
+      "state": "stable",
+      "sinceDartSdk": "2.6",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Name extensions using UpperCamelCase."
+    },
+    {
+      "name": "camel_case_types",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Name types using UpperCamelCase."
+    },
+    {
+      "name": "cancel_subscriptions",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Cancel instances of `dart:async` `StreamSubscription`."
+    },
+    {
+      "name": "cascade_invocations",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Cascade consecutive method invocations on the same reference."
+    },
+    {
+      "name": "cast_nullable_to_non_nullable",
+      "state": "stable",
+      "sinceDartSdk": "2.12",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Don't cast a nullable value to a non nullable type."
+    },
+    {
+      "name": "close_sinks",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Close instances of `dart:core` `Sink`."
+    },
+    {
+      "name": "collection_methods_unrelated_type",
+      "state": "stable",
+      "sinceDartSdk": "2.19",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Invocation of various collection methods with arguments of unrelated types."
+    },
+    {
+      "name": "combinators_ordering",
+      "state": "stable",
+      "sinceDartSdk": "2.19",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Sort combinator names alphabetically."
+    },
+    {
+      "name": "comment_references",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Only reference in-scope identifiers in doc comments."
+    },
+    {
+      "name": "conditional_uri_does_not_exist",
+      "state": "stable",
+      "sinceDartSdk": "2.16",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Missing conditional import."
+    },
+    {
+      "name": "constant_identifier_names",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Prefer using lowerCamelCase for constant names."
+    },
+    {
+      "name": "control_flow_in_finally",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid control flow in `finally` blocks."
+    },
+    {
+      "name": "curly_braces_in_flow_control_structures",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "DO use curly braces for all flow control structures."
+    },
+    {
+      "name": "dangling_library_doc_comments",
+      "state": "stable",
+      "sinceDartSdk": "2.19",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Attach library doc comments to library directives."
+    },
+    {
+      "name": "depend_on_referenced_packages",
+      "state": "stable",
+      "sinceDartSdk": "2.14",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Depend on referenced packages."
+    },
+    {
+      "name": "deprecated_consistency",
+      "state": "stable",
+      "sinceDartSdk": "2.13",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Missing deprecated annotation."
+    },
+    {
+      "name": "deprecated_member_use_from_same_package",
+      "state": "stable",
+      "sinceDartSdk": "3.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid using deprecated elements from within the package in which they are declared."
+    },
+    {
+      "name": "diagnostic_describe_all_properties",
+      "state": "stable",
+      "sinceDartSdk": "2.3",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "DO reference all public properties in debug methods."
+    },
+    {
+      "name": "directives_ordering",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Adhere to Effective Dart Guide directives sorting conventions."
+    },
+    {
+      "name": "discarded_futures",
+      "state": "stable",
+      "sinceDartSdk": "2.18",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "There should be no `Future`-returning calls in synchronous functions unless they are assigned or returned."
+    },
+    {
+      "name": "do_not_use_environment",
+      "state": "stable",
+      "sinceDartSdk": "2.9",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Do not use environment declared variables."
+    },
+    {
+      "name": "document_ignores",
+      "state": "stable",
+      "sinceDartSdk": "3.5",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Document ignore comments."
+    },
+    {
+      "name": "empty_catches",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid empty catch blocks."
+    },
+    {
+      "name": "empty_constructor_bodies",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use `;` instead of `{}` for empty constructor bodies."
+    },
+    {
+      "name": "empty_container_bodies",
+      "state": "stable",
+      "sinceDartSdk": "3.13",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use `;` instead of `{}` for empty container bodies."
+    },
+    {
+      "name": "empty_statements",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid empty statements."
+    },
+    {
+      "name": "enable_null_safety",
+      "state": "removed",
+      "sinceDartSdk": "2.19",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Do use sound null safety."
+    },
+    {
+      "name": "eol_at_end_of_file",
+      "state": "stable",
+      "sinceDartSdk": "2.14",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Put a single newline at end of file."
+    },
+    {
+      "name": "exhaustive_cases",
+      "state": "stable",
+      "sinceDartSdk": "2.9",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Define case clauses for all constants in enum-like classes."
+    },
+    {
+      "name": "file_names",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Name source files using `lowercase_with_underscores`."
+    },
+    {
+      "name": "flutter_style_todos",
+      "state": "stable",
+      "sinceDartSdk": "2.1",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use Flutter TODO format: // TODO(username): message, https://URL-to-issue."
+    },
+    {
+      "name": "hash_and_equals",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Always override `hashCode` if overriding `==`."
+    },
+    {
+      "name": "implementation_imports",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Don't import implementation files from another package."
+    },
+    {
+      "name": "implicit_call_tearoffs",
+      "state": "stable",
+      "sinceDartSdk": "2.19",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Explicitly tear-off `call` methods when using an object as a Function."
+    },
+    {
+      "name": "implicit_reopen",
+      "state": "experimental",
+      "sinceDartSdk": "3.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Don't implicitly reopen classes."
+    },
+    {
+      "name": "initialize_in_field_declaration",
+      "state": "stable",
+      "sinceDartSdk": "3.13",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Initialize the field in the field's initializer."
+    },
+    {
+      "name": "invalid_case_patterns",
+      "state": "experimental",
+      "sinceDartSdk": "3.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use case expressions that are valid in Dart 3.0."
+    },
+    {
+      "name": "invalid_runtime_check_with_js_interop_types",
+      "state": "stable",
+      "sinceDartSdk": "3.5",
+      "fixStatus": "needsEvaluation",
+      "incompatible": [],
+      "description": "Avoid runtime type tests with JS interop types where the result may not be platform-consistent."
+    },
+    {
+      "name": "invariant_booleans",
+      "state": "removed",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Conditions should not unconditionally evaluate to `true` or to `false`."
+    },
+    {
+      "name": "iterable_contains_unrelated_type",
+      "state": "removed",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Invocation of `Iterable<E>.contains` with references of unrelated types."
+    },
+    {
+      "name": "join_return_with_assignment",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Join return statement with assignment when possible."
+    },
+    {
+      "name": "leading_newlines_in_multiline_strings",
+      "state": "stable",
+      "sinceDartSdk": "2.8",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Start multiline strings with a newline."
+    },
+    {
+      "name": "library_annotations",
+      "state": "stable",
+      "sinceDartSdk": "2.19",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Attach library annotations to library directives."
+    },
+    {
+      "name": "library_names",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Name libraries using `lowercase_with_underscores`."
+    },
+    {
+      "name": "library_prefixes",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Use `lowercase_with_underscores` when specifying a library prefix."
+    },
+    {
+      "name": "library_private_types_in_public_api",
+      "state": "stable",
+      "sinceDartSdk": "2.14",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid using private types in public APIs."
+    },
+    {
+      "name": "lines_longer_than_80_chars",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid lines longer than 80 characters."
+    },
+    {
+      "name": "list_remove_unrelated_type",
+      "state": "removed",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Invocation of `remove` with references of unrelated types."
+    },
+    {
+      "name": "literal_only_boolean_expressions",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Boolean expression composed only with literals."
+    },
+    {
+      "name": "matching_super_parameters",
+      "state": "stable",
+      "sinceDartSdk": "3.0",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Use matching super parameter names."
+    },
+    {
+      "name": "missing_code_block_language_in_doc_comment",
+      "state": "stable",
+      "sinceDartSdk": "3.4",
+      "fixStatus": "needsEvaluation",
+      "incompatible": [],
+      "description": "A code block is missing a specified language."
+    },
+    {
+      "name": "missing_whitespace_between_adjacent_strings",
+      "state": "stable",
+      "sinceDartSdk": "2.8",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Missing whitespace between adjacent strings."
+    },
+    {
+      "name": "no_adjacent_strings_in_list",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Don't use adjacent strings in list."
+    },
+    {
+      "name": "no_default_cases",
+      "state": "experimental",
+      "sinceDartSdk": "2.9",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "No default cases."
+    },
+    {
+      "name": "no_duplicate_case_values",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Don't use more than one case with same value."
+    },
+    {
+      "name": "no_dynamic_casts",
+      "state": "stable",
+      "sinceDartSdk": "3.13",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Avoid implicit casts from `dynamic`."
+    },
+    {
+      "name": "no_leading_underscores_for_library_prefixes",
+      "state": "stable",
+      "sinceDartSdk": "2.16",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid leading underscores for library prefixes."
+    },
+    {
+      "name": "no_leading_underscores_for_local_identifiers",
+      "state": "stable",
+      "sinceDartSdk": "2.16",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid leading underscores for local identifiers."
+    },
+    {
+      "name": "no_literal_bool_comparisons",
+      "state": "stable",
+      "sinceDartSdk": "3.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Don't compare boolean expressions to boolean literals."
+    },
+    {
+      "name": "no_logic_in_create_state",
+      "state": "stable",
+      "sinceDartSdk": "2.8",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Don't put any logic in createState."
+    },
+    {
+      "name": "no_raw_types",
+      "state": "stable",
+      "sinceDartSdk": "3.13",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Avoid raw types."
+    },
+    {
+      "name": "no_runtimetype_tostring",
+      "state": "stable",
+      "sinceDartSdk": "2.8",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid calling `toString()` on `runtimeType`."
+    },
+    {
+      "name": "no_self_assignments",
+      "state": "stable",
+      "sinceDartSdk": "3.1",
+      "fixStatus": "needsEvaluation",
+      "incompatible": [],
+      "description": "Don't assign a variable to itself."
+    },
+    {
+      "name": "no_wildcard_variable_uses",
+      "state": "stable",
+      "sinceDartSdk": "3.1",
+      "fixStatus": "needsEvaluation",
+      "incompatible": [],
+      "description": "Don't use wildcard parameters or variables."
+    },
+    {
+      "name": "non_constant_identifier_names",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Name non-constant identifiers using lowerCamelCase."
+    },
+    {
+      "name": "noop_primitive_operations",
+      "state": "stable",
+      "sinceDartSdk": "2.14",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Noop primitive operations."
+    },
+    {
+      "name": "null_check_on_nullable_type_parameter",
+      "state": "stable",
+      "sinceDartSdk": "2.12",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Don't use `null` check on a potentially nullable type parameter."
+    },
+    {
+      "name": "null_closures",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Do not pass `null` as an argument where a closure is expected."
+    },
+    {
+      "name": "omit_local_variable_types",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [
+        "always_specify_types",
+        "specify_nonobvious_local_variable_types"
+      ],
+      "description": "Omit type annotations for local variables."
+    },
+    {
+      "name": "omit_obvious_local_variable_types",
+      "state": "stable",
+      "sinceDartSdk": "3.6",
+      "fixStatus": "hasFix",
+      "incompatible": [
+        "always_specify_types"
+      ],
+      "description": "Omit obvious type annotations for local variables."
+    },
+    {
+      "name": "omit_obvious_property_types",
+      "state": "stable",
+      "sinceDartSdk": "3.7",
+      "fixStatus": "hasFix",
+      "incompatible": [
+        "always_specify_types",
+        "type_annotate_public_apis"
+      ],
+      "description": "Omit obvious type annotations for top-level and static variables."
+    },
+    {
+      "name": "one_member_abstracts",
+      "state": "deprecated",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid defining a one-member abstract class when a simple function will do."
+    },
+    {
+      "name": "only_throw_errors",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Only throw instances of classes extending either Exception or Error."
+    },
+    {
+      "name": "overridden_fields",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Don't override fields."
+    },
+    {
+      "name": "package_api_docs",
+      "state": "removed",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Provide doc comments for all public APIs."
+    },
+    {
+      "name": "package_names",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Use `lowercase_with_underscores` for package names."
+    },
+    {
+      "name": "package_prefixed_library_names",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Prefix library names with the package name and a dot-separated path."
+    },
+    {
+      "name": "parameter_assignments",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Don't reassign references to parameters of functions or methods."
+    },
+    {
+      "name": "prefer_adjacent_string_concatenation",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use adjacent strings to concatenate string literals."
+    },
+    {
+      "name": "prefer_asserts_in_initializer_lists",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Prefer putting asserts in initializer lists."
+    },
+    {
+      "name": "prefer_asserts_with_message",
+      "state": "stable",
+      "sinceDartSdk": "2.3",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Prefer asserts with message."
+    },
+    {
+      "name": "prefer_bool_in_asserts",
+      "state": "removed",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Prefer using a boolean as the assert condition."
+    },
+    {
+      "name": "prefer_collection_literals",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use collection literals when possible."
+    },
+    {
+      "name": "prefer_conditional_assignment",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Prefer using `??=` over testing for `null`."
+    },
+    {
+      "name": "prefer_const_constructors",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Prefer `const` with constant constructors."
+    },
+    {
+      "name": "prefer_const_constructors_in_immutables",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Prefer declaring `const` constructors on `@immutable` classes."
+    },
+    {
+      "name": "prefer_const_declarations",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Prefer `const` over `final` for declarations."
+    },
+    {
+      "name": "prefer_const_literals_to_create_immutables",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Prefer const literals as parameters of constructors on @immutable classes."
+    },
+    {
+      "name": "prefer_constructors_over_static_methods",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Prefer defining constructors instead of static methods to create instances."
+    },
+    {
+      "name": "prefer_contains",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use contains for `List` and `String` instances."
+    },
+    {
+      "name": "prefer_double_quotes",
+      "state": "stable",
+      "sinceDartSdk": "2.4",
+      "fixStatus": "hasFix",
+      "incompatible": [
+        "prefer_single_quotes"
+      ],
+      "description": "Prefer double quotes where they won't require escape sequences."
+    },
+    {
+      "name": "prefer_equal_for_default_values",
+      "state": "removed",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Use `=` to separate a named parameter from its default value."
+    },
+    {
+      "name": "prefer_expression_function_bodies",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use => for short members whose body is a single return statement."
+    },
+    {
+      "name": "prefer_final_fields",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Private field could be `final`."
+    },
+    {
+      "name": "prefer_final_in_for_each",
+      "state": "stable",
+      "sinceDartSdk": "2.1",
+      "fixStatus": "hasFix",
+      "incompatible": [
+        "unnecessary_final"
+      ],
+      "description": "Prefer final in for-each loop variable if reference is not reassigned."
+    },
+    {
+      "name": "prefer_final_locals",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [
+        "unnecessary_final"
+      ],
+      "description": "Prefer final for variable declarations if they are not reassigned."
+    },
+    {
+      "name": "prefer_final_parameters",
+      "state": "deprecated",
+      "sinceDartSdk": "2.14",
+      "fixStatus": "hasFix",
+      "incompatible": [
+        "unnecessary_final",
+        "avoid_final_parameters"
+      ],
+      "description": "Prefer final for parameter declarations if they are not reassigned."
+    },
+    {
+      "name": "prefer_for_elements_to_map_fromiterable",
+      "state": "stable",
+      "sinceDartSdk": "2.3",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Prefer `for` elements when building maps from iterables."
+    },
+    {
+      "name": "prefer_foreach",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use `forEach` to only apply a function to all the elements."
+    },
+    {
+      "name": "prefer_function_declarations_over_variables",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use a function declaration to bind a function to a name."
+    },
+    {
+      "name": "prefer_generic_function_type_aliases",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Prefer generic function type aliases."
+    },
+    {
+      "name": "prefer_if_elements_to_conditional_expressions",
+      "state": "stable",
+      "sinceDartSdk": "2.3",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Prefer if elements to conditional expressions where possible."
+    },
+    {
+      "name": "prefer_if_null_operators",
+      "state": "stable",
+      "sinceDartSdk": "2.4",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Prefer using `??` operators."
+    },
+    {
+      "name": "prefer_initializing_formals",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use initializing formals when possible."
+    },
+    {
+      "name": "prefer_inlined_adds",
+      "state": "stable",
+      "sinceDartSdk": "2.3",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Inline list item declarations where possible."
+    },
+    {
+      "name": "prefer_int_literals",
+      "state": "stable",
+      "sinceDartSdk": "2.1",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Prefer int literals over double literals."
+    },
+    {
+      "name": "prefer_interpolation_to_compose_strings",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use interpolation to compose strings and values."
+    },
+    {
+      "name": "prefer_is_empty",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use `isEmpty` for `Iterable`s and `Map`s."
+    },
+    {
+      "name": "prefer_is_not_empty",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use `isNotEmpty` for `Iterable`s and `Map`s."
+    },
+    {
+      "name": "prefer_is_not_operator",
+      "state": "stable",
+      "sinceDartSdk": "2.7",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Prefer is! operator."
+    },
+    {
+      "name": "prefer_iterable_wheretype",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Prefer to use `whereType` on iterable."
+    },
+    {
+      "name": "prefer_mixin",
+      "state": "stable",
+      "sinceDartSdk": "2.1",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Prefer using mixins."
+    },
+    {
+      "name": "prefer_null_aware_method_calls",
+      "state": "stable",
+      "sinceDartSdk": "2.14",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Prefer `null`-aware method calls."
+    },
+    {
+      "name": "prefer_null_aware_operators",
+      "state": "stable",
+      "sinceDartSdk": "2.2",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Prefer using `null`-aware operators."
+    },
+    {
+      "name": "prefer_relative_imports",
+      "state": "stable",
+      "sinceDartSdk": "2.6",
+      "fixStatus": "hasFix",
+      "incompatible": [
+        "always_use_package_imports"
+      ],
+      "description": "Prefer relative imports for files in `lib/`."
+    },
+    {
+      "name": "prefer_single_quotes",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [
+        "prefer_double_quotes"
+      ],
+      "description": "Only use double quotes for strings containing single quotes."
+    },
+    {
+      "name": "prefer_spread_collections",
+      "state": "stable",
+      "sinceDartSdk": "2.3",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use spread collections when possible."
+    },
+    {
+      "name": "prefer_typing_uninitialized_variables",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Prefer typing uninitialized variables and fields."
+    },
+    {
+      "name": "prefer_void_to_null",
+      "state": "stable",
+      "sinceDartSdk": "2.1",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Don't use the Null type, unless you are positive that you don't want void."
+    },
+    {
+      "name": "provide_deprecation_message",
+      "state": "stable",
+      "sinceDartSdk": "2.2",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Provide a deprecation message, via `@Deprecated(\"message\")`."
+    },
+    {
+      "name": "public_member_api_docs",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Document all public members."
+    },
+    {
+      "name": "recursive_getters",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Property getter recursively returns itself."
+    },
+    {
+      "name": "remove_deprecations_in_breaking_versions",
+      "state": "stable",
+      "sinceDartSdk": "3.10",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Deprecation in major version."
+    },
+    {
+      "name": "require_trailing_commas",
+      "state": "stable",
+      "sinceDartSdk": "2.14",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use trailing commas for all parameter lists and argument lists."
+    },
+    {
+      "name": "secure_pubspec_urls",
+      "state": "stable",
+      "sinceDartSdk": "2.16",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Use secure urls in `pubspec.yaml`."
+    },
+    {
+      "name": "simple_directive_paths",
+      "state": "stable",
+      "sinceDartSdk": "3.12",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use simple directive paths."
+    },
+    {
+      "name": "simplify_variable_pattern",
+      "state": "stable",
+      "sinceDartSdk": "3.11",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid unnecessary member names in variable patterns."
+    },
+    {
+      "name": "sized_box_for_whitespace",
+      "state": "stable",
+      "sinceDartSdk": "2.9",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "`SizedBox` for whitespace."
+    },
+    {
+      "name": "sized_box_shrink_expand",
+      "state": "stable",
+      "sinceDartSdk": "2.16",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Use SizedBox shrink and expand named constructors."
+    },
+    {
+      "name": "slash_for_doc_comments",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Prefer using `///` for doc comments."
+    },
+    {
+      "name": "sort_child_properties_last",
+      "state": "stable",
+      "sinceDartSdk": "2.4",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Sort child properties last in widget instance creations."
+    },
+    {
+      "name": "sort_constructors_first",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Sort constructor declarations before other members."
+    },
+    {
+      "name": "sort_pub_dependencies",
+      "state": "stable",
+      "sinceDartSdk": "2.1",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Sort pub dependencies alphabetically."
+    },
+    {
+      "name": "sort_unnamed_constructors_first",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Sort unnamed constructor declarations first."
+    },
+    {
+      "name": "specify_nonobvious_local_variable_types",
+      "state": "stable",
+      "sinceDartSdk": "3.6",
+      "fixStatus": "hasFix",
+      "incompatible": [
+        "omit_local_variable_types"
+      ],
+      "description": "Specify non-obvious type annotations for local variables."
+    },
+    {
+      "name": "specify_nonobvious_property_types",
+      "state": "stable",
+      "sinceDartSdk": "3.7",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Specify non-obvious type annotations for top-level and static variables."
+    },
+    {
+      "name": "strict_top_level_inference",
+      "state": "stable",
+      "sinceDartSdk": "3.7",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Specify type annotations."
+    },
+    {
+      "name": "super_goes_last",
+      "state": "removed",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Place the `super` call last in a constructor initialization list."
+    },
+    {
+      "name": "switch_on_type",
+      "state": "stable",
+      "sinceDartSdk": "3.9",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid switch statements on a 'Type'."
+    },
+    {
+      "name": "test_types_in_equals",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Test type of argument in `operator ==(Object other)`."
+    },
+    {
+      "name": "throw_in_finally",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid `throw` in `finally` block."
+    },
+    {
+      "name": "tighten_type_of_initializing_formals",
+      "state": "stable",
+      "sinceDartSdk": "2.12",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Tighten type of initializing formal."
+    },
+    {
+      "name": "type_annotate_public_apis",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [
+        "omit_obvious_property_types"
+      ],
+      "description": "Type annotate public APIs."
+    },
+    {
+      "name": "type_init_formals",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Don't type annotate initializing formals."
+    },
+    {
+      "name": "type_literal_in_constant_pattern",
+      "state": "stable",
+      "sinceDartSdk": "3.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Don't use constant patterns with type literals."
+    },
+    {
+      "name": "unawaited_futures",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "`Future` results in `async` function bodies must be `await`ed or marked `unawaited` using `dart:async`."
+    },
+    {
+      "name": "unintended_html_in_doc_comment",
+      "state": "stable",
+      "sinceDartSdk": "3.5",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Use of angle brackets in a doc comment is treated as HTML by Markdown."
+    },
+    {
+      "name": "unnecessary_async",
+      "state": "experimental",
+      "sinceDartSdk": "3.7",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "No await no async."
+    },
+    {
+      "name": "unnecessary_await_in_return",
+      "state": "stable",
+      "sinceDartSdk": "2.1",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Unnecessary `await` keyword in return."
+    },
+    {
+      "name": "unnecessary_brace_in_string_interps",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid using braces in interpolation when not needed."
+    },
+    {
+      "name": "unnecessary_breaks",
+      "state": "stable",
+      "sinceDartSdk": "3.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Don't use explicit `break`s when a break is implied."
+    },
+    {
+      "name": "unnecessary_const",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid `const` keyword."
+    },
+    {
+      "name": "unnecessary_const_in_enum_constructor",
+      "state": "stable",
+      "sinceDartSdk": "3.13",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Don't use an explicit `const` in a generative enum constructor."
+    },
+    {
+      "name": "unnecessary_constructor_name",
+      "state": "stable",
+      "sinceDartSdk": "2.15",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Unnecessary `.new` constructor name."
+    },
+    {
+      "name": "unnecessary_final",
+      "state": "stable",
+      "sinceDartSdk": "2.7",
+      "fixStatus": "hasFix",
+      "incompatible": [
+        "prefer_final_locals",
+        "prefer_final_parameters",
+        "prefer_final_in_for_each"
+      ],
+      "description": "Don't use `final` for local variables."
+    },
+    {
+      "name": "unnecessary_getters_setters",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid wrapping fields in getters and setters just to be \"safe\"."
+    },
+    {
+      "name": "unnecessary_ignore",
+      "state": "stable",
+      "sinceDartSdk": "3.8",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Don't ignore a diagnostic code that is not produced."
+    },
+    {
+      "name": "unnecessary_lambdas",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Don't create a lambda when a tear-off will do."
+    },
+    {
+      "name": "unnecessary_late",
+      "state": "stable",
+      "sinceDartSdk": "2.16",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Don't specify the `late` modifier when it is not needed."
+    },
+    {
+      "name": "unnecessary_library_directive",
+      "state": "stable",
+      "sinceDartSdk": "2.19",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid library directives unless they have documentation comments or annotations."
+    },
+    {
+      "name": "unnecessary_library_name",
+      "state": "stable",
+      "sinceDartSdk": "3.4",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Don't have a library name in a `library` declaration."
+    },
+    {
+      "name": "unnecessary_new",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Unnecessary new keyword."
+    },
+    {
+      "name": "unnecessary_null_aware_assignments",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid `null` in `null`-aware assignment."
+    },
+    {
+      "name": "unnecessary_null_aware_operator_on_extension_on_nullable",
+      "state": "stable",
+      "sinceDartSdk": "2.18",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Unnecessary null aware operator on extension on a nullable type."
+    },
+    {
+      "name": "unnecessary_null_checks",
+      "state": "stable",
+      "sinceDartSdk": "2.12",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Unnecessary `null` checks."
+    },
+    {
+      "name": "unnecessary_null_in_if_null_operators",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid using `null` in `??` operators."
+    },
+    {
+      "name": "unnecessary_nullable_for_final_variable_declarations",
+      "state": "stable",
+      "sinceDartSdk": "2.10",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use a non-nullable type for a final variable initialized with a non-nullable value."
+    },
+    {
+      "name": "unnecessary_overrides",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Don't override a method to do a super method invocation with the same parameters."
+    },
+    {
+      "name": "unnecessary_parenthesis",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Unnecessary parentheses can be removed."
+    },
+    {
+      "name": "unnecessary_primary_constructor_body",
+      "state": "stable",
+      "sinceDartSdk": "3.13",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Unnecessary primary constructor bodies can be removed."
+    },
+    {
+      "name": "unnecessary_raw_strings",
+      "state": "stable",
+      "sinceDartSdk": "2.8",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Unnecessary raw string."
+    },
+    {
+      "name": "unnecessary_statements",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid using unnecessary statements."
+    },
+    {
+      "name": "unnecessary_string_escapes",
+      "state": "stable",
+      "sinceDartSdk": "2.8",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Remove unnecessary backslashes in strings."
+    },
+    {
+      "name": "unnecessary_string_interpolations",
+      "state": "stable",
+      "sinceDartSdk": "2.8",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Unnecessary string interpolation."
+    },
+    {
+      "name": "unnecessary_this",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Don't access members with `this` unless avoiding shadowing."
+    },
+    {
+      "name": "unnecessary_to_list_in_spreads",
+      "state": "stable",
+      "sinceDartSdk": "2.18",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Unnecessary `toList()` in spreads."
+    },
+    {
+      "name": "unnecessary_type_name_in_constructor",
+      "state": "stable",
+      "sinceDartSdk": "3.13",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Don't use an explicit type name in a constructor."
+    },
+    {
+      "name": "unnecessary_unawaited",
+      "state": "stable",
+      "sinceDartSdk": "3.9",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Unnecessary use of 'unawaited'."
+    },
+    {
+      "name": "unnecessary_underscores",
+      "state": "stable",
+      "sinceDartSdk": "3.7",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Unnecessary underscores can be removed."
+    },
+    {
+      "name": "unreachable_from_main",
+      "state": "stable",
+      "sinceDartSdk": "2.19",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Unreachable top-level members in executable libraries."
+    },
+    {
+      "name": "unrelated_type_equality_checks",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Equality operator `==` invocation with references of unrelated types."
+    },
+    {
+      "name": "unsafe_html",
+      "state": "removed",
+      "sinceDartSdk": "2.4",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Avoid unsafe HTML APIs."
+    },
+    {
+      "name": "unsafe_variance",
+      "state": "experimental",
+      "sinceDartSdk": "3.7",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Unsafe type: Has a type variable in a non-covariant position."
+    },
+    {
+      "name": "use_build_context_synchronously",
+      "state": "stable",
+      "sinceDartSdk": "2.13",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Do not use `BuildContext` across asynchronous gaps."
+    },
+    {
+      "name": "use_colored_box",
+      "state": "stable",
+      "sinceDartSdk": "2.17",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use `ColoredBox`."
+    },
+    {
+      "name": "use_declaring_parameters",
+      "state": "stable",
+      "sinceDartSdk": "3.13",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use a declaring parameter."
+    },
+    {
+      "name": "use_decorated_box",
+      "state": "stable",
+      "sinceDartSdk": "2.16",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use `DecoratedBox`."
+    },
+    {
+      "name": "use_enums",
+      "state": "stable",
+      "sinceDartSdk": "2.17",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use enums rather than classes that behave like enums."
+    },
+    {
+      "name": "use_full_hex_values_for_flutter_colors",
+      "state": "stable",
+      "sinceDartSdk": "2.2",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Prefer an 8-digit hexadecimal integer (for example, 0xFFFFFFFF) to instantiate a Color."
+    },
+    {
+      "name": "use_function_type_syntax_for_parameters",
+      "state": "stable",
+      "sinceDartSdk": "2.1",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use generic function type syntax for parameters."
+    },
+    {
+      "name": "use_if_null_to_convert_nulls_to_bools",
+      "state": "deprecated",
+      "sinceDartSdk": "2.13",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use `??` operators to convert `null`s to `bool`s."
+    },
+    {
+      "name": "use_is_even_rather_than_modulo",
+      "state": "stable",
+      "sinceDartSdk": "2.9",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Prefer intValue.isOdd/isEven instead of checking the result of % 2."
+    },
+    {
+      "name": "use_key_in_widget_constructors",
+      "state": "stable",
+      "sinceDartSdk": "2.8",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use key in widget constructors."
+    },
+    {
+      "name": "use_late_for_private_fields_and_variables",
+      "state": "experimental",
+      "sinceDartSdk": "2.10",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Use late for private members with a non-nullable type."
+    },
+    {
+      "name": "use_named_constants",
+      "state": "stable",
+      "sinceDartSdk": "2.13",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use predefined named constants."
+    },
+    {
+      "name": "use_null_aware_elements",
+      "state": "stable",
+      "sinceDartSdk": "3.8",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "If-elements testing for null can be replaced with null-aware elements."
+    },
+    {
+      "name": "use_primary_constructors",
+      "state": "experimental",
+      "sinceDartSdk": "3.13",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use a primary constructor."
+    },
+    {
+      "name": "use_raw_strings",
+      "state": "stable",
+      "sinceDartSdk": "2.8",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use raw string to avoid escapes."
+    },
+    {
+      "name": "use_rethrow_when_possible",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use rethrow to rethrow a caught exception."
+    },
+    {
+      "name": "use_setters_to_change_properties",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Use a setter for operations that conceptually change a property."
+    },
+    {
+      "name": "use_string_buffers",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Use string buffers to compose strings."
+    },
+    {
+      "name": "use_string_in_part_of_directives",
+      "state": "stable",
+      "sinceDartSdk": "2.19",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use string in part of directives."
+    },
+    {
+      "name": "use_super_parameters",
+      "state": "experimental",
+      "sinceDartSdk": "2.17",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use super-initializer parameters where possible."
+    },
+    {
+      "name": "use_test_throws_matchers",
+      "state": "stable",
+      "sinceDartSdk": "2.14",
+      "fixStatus": "needsFix",
+      "incompatible": [],
+      "description": "Use throwsA matcher instead of fail()."
+    },
+    {
+      "name": "use_to_and_as_if_applicable",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Start the name of the method with to/_to or as/_as if applicable."
+    },
+    {
+      "name": "use_truncating_division",
+      "state": "stable",
+      "sinceDartSdk": "3.6",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Use truncating division."
+    },
+    {
+      "name": "valid_regexps",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Use valid regular expression syntax."
+    },
+    {
+      "name": "var_with_no_type_annotation",
+      "state": "experimental",
+      "sinceDartSdk": "3.12",
+      "fixStatus": "hasFix",
+      "incompatible": [],
+      "description": "Avoid declaring parameters with `var` and no type annotation."
+    },
+    {
+      "name": "void_checks",
+      "state": "stable",
+      "sinceDartSdk": "2.0",
+      "fixStatus": "noFix",
+      "incompatible": [],
+      "description": "Don't assign to `void`."
+    }
+  ]
+}

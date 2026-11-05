@@ -1,0 +1,29 @@
+name: devimobile_devkit_cli
+description: Runs the tests of every package in a Dart or Flutter pub workspace with one summary, and merges lcov coverage with excludes and thresholds.
+version: 0.1.0
+repository: https://github.com/DeviMobile/devkit/tree/main/packages/devimobile_devkit_cli
+issue_tracker: https://github.com/DeviMobile/devkit/issues
+topics:
+  - testing
+  - coverage
+  - workspace
+  - cli
+  - flutter
+
+environment:
+  sdk: ^3.13.0
+
+resolution: workspace
+
+executables:
+  devkit:
+
+dependencies:
+  args: ^2.7.0
+  glob: ^2.2.0
+  path: ^1.9.1
+  yaml: ^3.1.4
+
+dev_dependencies:
+  devimobile_devkit_lints: ^0.1.0
+  test: ^1.33.0

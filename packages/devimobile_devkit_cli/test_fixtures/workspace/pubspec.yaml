@@ -1,0 +1,17 @@
+name: fixture_workspace
+publish_to: none
+
+environment:
+  sdk: ^3.13.0
+
+workspace:
+  - packages/dart_failing
+  - packages/dart_ok
+  - packages/flutter_ok
+  - packages/no_tests
+
+devkit:
+  coverage:
+    exclude:
+      - '**/generated.dart'
+    min: 90
