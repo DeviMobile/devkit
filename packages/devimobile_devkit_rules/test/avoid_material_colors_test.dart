@@ -34,6 +34,17 @@ final c = m.Colors.white;
     await tester.expectLints(code, ['m.Colors.white']);
   });
 
+  test('ignores references in doc comments', () async {
+    const code = '''
+import 'package:flutter/material.dart';
+const c = Colors.red;
+
+/// Defaults to [Colors.blue], see also [Colors.red].
+const d = c;
+''';
+    await tester.expectLints(code, ['Colors.red']);
+  });
+
   test('allows Colors.transparent', () async {
     await tester.expectNone('''
 import 'package:flutter/material.dart';

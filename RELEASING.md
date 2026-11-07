@@ -9,9 +9,15 @@
    | Change | Title | Before 1.0.0 | From 1.0.0 |
    |---|---|---|---|
    | enable a lint rule, raise the minimum SDK, breaking CLI change | `feat(lints)!: …` | minor | major |
+   | add a plugin rule or report more cases in `devimobile_devkit_rules` | `feat(rules)!: …` | minor | major |
    | disable a rule, add a file, new CLI feature | `feat(…): …` | patch | minor |
-   | fix, reasons, documentation | `fix(…): …` | patch | patch |
+   | fix, reasons, documentation, fewer false positives in plugin rules | `fix(…): …` | patch | patch |
    | CI, tooling | `chore: …`, `ci: …` | no release | no release |
+
+   A plain `feat(rules): …` is a patch before 1.0.0
+   (`bump-patch-for-minor-pre-major`), so a change that adds diagnostics to
+   existing code needs the `!`: a caret constraint on `0.x` then never brings
+   new diagnostics.
 
 2. Release Please keeps one release PR per package. Merging it tags
    `<package>-vX.Y.Z` and creates a GitHub release.

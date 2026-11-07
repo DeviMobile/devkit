@@ -59,6 +59,28 @@ Text answer(bool ok) => Text(ok ? 'Yes' : 'No');
     ]);
   });
 
+  test('reports literals in ??, switch branches and concatenation', () async {
+    const code = '''
+import 'package:flutter/material.dart';
+Text a(String? name) => Text(name ?? 'Guest');
+Text b(int s) => Text(switch (s) { 0 => 'Done', _ => 'Failed' });
+Text c(String total) => Text('Total: ' + total);
+''';
+    await tester.expectLints(code, [
+      "'Guest'",
+      "'Done'",
+      "'Failed'",
+      "'Total: '",
+    ]);
+  });
+
+  test('ignores strings in switch patterns and guards', () async {
+    await tester.expectNone('''
+import 'package:flutter/material.dart';
+Text a(String s, String x) => Text(switch (s) { 'ok' when x == 'yes' => x, _ => s });
+''');
+  });
+
   test('reports text in any script', () async {
     const code = '''
 import 'package:flutter/material.dart';

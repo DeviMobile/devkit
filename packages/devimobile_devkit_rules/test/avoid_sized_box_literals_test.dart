@@ -28,6 +28,14 @@ Widget gap() => const Column(children: [SizedBox(height: 12)]);
     await tester.expectLints(code, ['SizedBox(height: 12)']);
   });
 
+  test('reports a literal in a conditional size once', () async {
+    const code = '''
+import 'package:flutter/material.dart';
+SizedBox gap(bool isWide) => SizedBox(height: isWide ? 24 : 16);
+''';
+    await tester.expectLints(code, ['SizedBox(height: isWide ? 24 : 16)']);
+  });
+
   test('allows shrink, expand, no size, infinity and tokens', () async {
     await tester.expectNone('''
 import 'package:flutter/material.dart';

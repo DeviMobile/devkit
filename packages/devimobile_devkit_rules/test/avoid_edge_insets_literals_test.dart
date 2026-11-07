@@ -65,6 +65,61 @@ EdgeInsets d(double spacing) => EdgeInsets.symmetric(vertical: spacing * 2);
 ''');
   });
 
+  test('reports EdgeInsetsGeometry factories and their shorthands', () async {
+    const code = '''
+import 'package:flutter/material.dart';
+const a = Padding(padding: .all(16));
+const b = Padding(padding: .symmetric(vertical: 8));
+const c = EdgeInsetsGeometry.all(16);
+const d = EdgeInsetsGeometry.directional(start: 8);
+const e = EdgeInsetsGeometry.fromSTEB(1, 2, 3, 4);
+''';
+    await tester.expectLints(code, [
+      '.all(16)',
+      '.symmetric(vertical: 8)',
+      'EdgeInsetsGeometry.all(16)',
+      'EdgeInsetsGeometry.directional(start: 8)',
+      'EdgeInsetsGeometry.fromSTEB(1, 2, 3, 4)',
+    ]);
+  });
+
+  test('reports literals in conditional, ?? and switch branches', () async {
+    const code = '''
+import 'package:flutter/material.dart';
+EdgeInsets a(bool compact) => EdgeInsets.all(compact ? 8 : 16);
+EdgeInsets b(double? custom) => EdgeInsets.all(custom ?? 16);
+EdgeInsets c(int size, double s) => EdgeInsets.all(switch (size) {
+  0 => s,
+  _ => 24,
+});
+''';
+    await tester.expectLints(code, [
+      'EdgeInsets.all(compact ? 8 : 16)',
+      'EdgeInsets.all(custom ?? 16)',
+      'EdgeInsets.all(switch (size) {\n  0 => s,\n  _ => 24,\n})',
+    ]);
+  });
+
+  test('allows branches that are all tokens', () async {
+    await tester.expectNone('''
+import 'package:flutter/material.dart';
+EdgeInsets a(bool c, double s, double m) => EdgeInsets.all(c ? s : m);
+EdgeInsets b(int size, double s) => EdgeInsets.all(switch (size) {
+  0 => s,
+  _ => s * 2,
+});
+''');
+  });
+
+  test('ignores the device pixel ratio of view padding', () async {
+    await tester.expectNone('''
+import 'package:flutter/material.dart';
+EdgeInsets a(Object p) => EdgeInsets.fromViewPadding(p, 2.0);
+EdgeInsets b(Object p) => EdgeInsets.fromWindowPadding(p, 3);
+EdgeInsetsGeometry c(Object p) => EdgeInsetsGeometry.fromViewPadding(p, 2);
+''');
+  });
+
   test('ignores a class named EdgeInsets outside Flutter', () async {
     tester.addOtherPackageFile('lib/insets.dart', '''
 class EdgeInsets {

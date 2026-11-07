@@ -12,8 +12,15 @@ abstract class NumericArgumentRule extends AnalysisRule {
   /// Creates a rule with the given [name] and [description].
   NumericArgumentRule({required super.name, required super.description});
 
-  /// Whether the rule applies to invocations of [constructor].
-  bool appliesTo(ConstructorElement constructor);
+  /// Whether the rule checks [parameter] of [constructor].
+  ///
+  /// [constructor] is the end of any chain of redirecting factories, so
+  /// `EdgeInsetsGeometry.all` arrives as `EdgeInsets.all`; [parameter] is the
+  /// parameter of the invoked constructor.
+  bool appliesTo(
+    ConstructorElement constructor,
+    FormalParameterElement parameter,
+  );
 
   @override
   void registerNodeProcessors(
@@ -21,10 +28,7 @@ abstract class NumericArgumentRule extends AnalysisRule {
     RuleContext context,
   ) {
     if (!context.isInLibDir) return;
-    final visitor = _Visitor(this);
-    registry
-      ..addIntegerLiteral(this, visitor)
-      ..addDoubleLiteral(this, visitor);
+    registry.addArgumentList(this, _Visitor(this));
   }
 }
 
@@ -34,39 +38,16 @@ class _Visitor extends SimpleAstVisitor<void> {
   final NumericArgumentRule rule;
 
   @override
-  void visitDoubleLiteral(DoubleLiteral node) => _check(node);
-
-  @override
-  void visitIntegerLiteral(IntegerLiteral node) => _check(node);
-
-  void _check(Literal literal) {
-    final found = enclosingArgument(literal, isWrapper: isNumericWrapper);
-    if (found == null) return;
-    final value = found.value;
-    // `spacing * 2` is a computed value, not a literal.
-    if (!isNumericLiteralExpression(value)) return;
-    // Report once per invocation: from the first literal of the first
-    // literal argument.
-    if (!identical(_firstLiteral(value), literal)) return;
-    final arguments = found.argument.parent;
-    if (arguments is! ArgumentList) return;
-    final firstLiteralArgument = arguments.arguments
-        .map(argumentValue)
-        .firstWhere(isNumericLiteralExpression);
-    if (!identical(firstLiteralArgument, value)) return;
-
-    final constructor = receivingParameter(found.argument)?.enclosingElement;
-    if (constructor is! ConstructorElement || !rule.appliesTo(constructor)) {
-      return;
+  void visitArgumentList(ArgumentList node) {
+    for (final argument in node.arguments) {
+      final parameter = receivingParameter(argument);
+      final constructor = parameter?.enclosingElement;
+      if (parameter == null || constructor is! ConstructorElement) continue;
+      if (!rule.appliesTo(redirectTarget(constructor), parameter)) continue;
+      if (hasNumericLiteralOutcome(argumentValue(argument))) {
+        rule.reportAtNode(node.parent);
+        return;
+      }
     }
-    rule.reportAtNode(arguments.parent);
   }
-
-  static Expression _firstLiteral(Expression expression) =>
-      switch (expression) {
-        ParenthesizedExpression(:final expression) => _firstLiteral(expression),
-        PrefixExpression(:final operand) => _firstLiteral(operand),
-        BinaryExpression(:final leftOperand) => _firstLiteral(leftOperand),
-        _ => expression,
-      };
 }

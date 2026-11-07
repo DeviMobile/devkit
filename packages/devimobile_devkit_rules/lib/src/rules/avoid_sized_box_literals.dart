@@ -27,9 +27,17 @@ class AvoidSizedBoxLiterals extends NumericArgumentRule {
   @override
   LintCode get diagnosticCode => code;
 
+  /// The parameters that size the box.
+  static const parameterNames = {'width', 'height', 'dimension'};
+
   @override
-  bool appliesTo(ConstructorElement constructor) {
+  bool appliesTo(
+    ConstructorElement constructor,
+    FormalParameterElement parameter,
+  ) {
     final type = constructor.enclosingElement;
-    return type.name == 'SizedBox' && isFromFlutter(type);
+    return type.name == 'SizedBox' &&
+        isFromFlutter(type) &&
+        parameterNames.contains(parameter.name);
   }
 }

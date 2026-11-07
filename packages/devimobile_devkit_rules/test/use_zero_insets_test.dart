@@ -43,6 +43,25 @@ final a = EdgeInsets.zero;
     );
   });
 
+  test('evaluates arithmetic of literals', () async {
+    expect(
+      await fix('final a = EdgeInsets.all(0 * 8);'),
+      endsWith('final a = EdgeInsets.zero;\n'),
+    );
+    expect(await fix('final a = EdgeInsets.all(8 ~/ 0);'), isNull);
+  });
+
+  test('handles EdgeInsetsGeometry factories and shorthands', () async {
+    expect(
+      await fix('const a = EdgeInsetsGeometry.all(0);'),
+      endsWith('const a = EdgeInsetsGeometry.zero;\n'),
+    );
+    expect(
+      await fix('const a = Padding(padding: .all(0));'),
+      endsWith('const a = Padding(padding: .zero);\n'),
+    );
+  });
+
   test('replaces a dot shorthand with .zero', () async {
     expect(
       await fix('const EdgeInsets a = .only(left: 0);'),
@@ -52,7 +71,6 @@ final a = EdgeInsets.zero;
 
   test('offers nothing when a value is not zero', () async {
     expect(await fix('final a = EdgeInsets.all(8);'), isNull);
-    expect(await fix('final a = EdgeInsets.all(0 * 8);'), isNull);
     expect(
       await fix('EdgeInsets f(double s) => EdgeInsets.only(left: 0, top: s);'),
       isNull,

@@ -25,7 +25,10 @@ class AvoidColorLiterals extends NumericArgumentRule {
   LintCode get diagnosticCode => code;
 
   @override
-  bool appliesTo(ConstructorElement constructor) {
+  bool appliesTo(
+    ConstructorElement constructor,
+    FormalParameterElement parameter,
+  ) {
     final type = constructor.enclosingElement;
     return type.name == 'Color' && isFromDartUi(type);
   }

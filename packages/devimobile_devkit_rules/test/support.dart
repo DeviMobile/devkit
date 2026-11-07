@@ -18,6 +18,12 @@ class EdgeInsetsDirectional extends EdgeInsetsGeometry {
     double end = 0.0,
     double bottom = 0.0,
   });
+  const EdgeInsetsDirectional.fromSTEB(
+    double start,
+    double top,
+    double end,
+    double bottom,
+  );
 }
 
 class IconButton extends StatelessWidget {
@@ -147,6 +153,66 @@ class _Harness extends AnalysisRuleTest {
       text:
           '\n  const SizedBox.square({super.key, super.child, '
           'double? dimension}) : width = dimension, height = dimension;',
+    );
+    // Redirecting factories of EdgeInsetsGeometry, as in Flutter; they make
+    // `Padding(padding: .all(16))` resolve.
+    _insert(
+      '$flutterLib/src/painting/edge_insets.dart',
+      after: '',
+      text: "import 'package:flutter/src/devkit_extras.dart';\n",
+    );
+    _insert(
+      '$flutterLib/src/painting/edge_insets.dart',
+      after: 'const EdgeInsetsGeometry();',
+      text: '''
+  static const EdgeInsetsGeometry zero = EdgeInsets.zero;
+  const factory EdgeInsetsGeometry.all(double value) = EdgeInsets.all;
+  const factory EdgeInsetsGeometry.only({
+    double left,
+    double right,
+    double top,
+    double bottom,
+  }) = EdgeInsets.only;
+  const factory EdgeInsetsGeometry.directional({
+    double start,
+    double end,
+    double top,
+    double bottom,
+  }) = EdgeInsetsDirectional.only;
+  const factory EdgeInsetsGeometry.symmetric({
+    double vertical,
+    double horizontal,
+  }) = EdgeInsets.symmetric;
+  const factory EdgeInsetsGeometry.fromLTRB(
+    double left,
+    double top,
+    double right,
+    double bottom,
+  ) = EdgeInsets.fromLTRB;
+  factory EdgeInsetsGeometry.fromViewPadding(
+    Object padding,
+    double devicePixelRatio,
+  ) = EdgeInsets.fromViewPadding;
+  const factory EdgeInsetsGeometry.fromSTEB(
+    double start,
+    double top,
+    double end,
+    double bottom,
+  ) = EdgeInsetsDirectional.fromSTEB;''',
+    );
+    _insert(
+      '$flutterLib/src/painting/edge_insets.dart',
+      after: 'static const EdgeInsets zero = EdgeInsets.only();',
+      text: '''
+  EdgeInsets.fromViewPadding(Object padding, double devicePixelRatio)
+    : left = 0,
+      top = 0,
+      right = 0,
+      bottom = 0;
+  factory EdgeInsets.fromWindowPadding(
+    Object padding,
+    double devicePixelRatio,
+  ) = EdgeInsets.fromViewPadding;''',
     );
     _insert(
       '$flutterLib/material.dart',

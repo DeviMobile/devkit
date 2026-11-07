@@ -31,7 +31,7 @@ Every rule is enabled once the plugin is listed and reports a warning.
 |---|---|---|
 | `avoid_color_literals` | `Color(0xFF2196F3)`, `Color.fromARGB(255, 0, 0, 0)`, any `dart:ui` `Color` constructor with a numeric literal | `Color(value)` from a variable |
 | `avoid_material_colors` | `Colors.blue`, `Colors.red.shade100` | `Colors.transparent` |
-| `avoid_edge_insets_literals` | `EdgeInsets.all(16)`, `EdgeInsets.only(left: 4)`, `EdgeInsetsDirectional.only(start: 8)`, `.symmetric(vertical: 8)` | `EdgeInsets.zero`, `EdgeInsets.all(spacing)` |
+| `avoid_edge_insets_literals` | `EdgeInsets.all(16)`, `EdgeInsets.only(left: 4)`, `EdgeInsetsDirectional.only(start: 8)`, `EdgeInsetsGeometry.all(16)`, `Padding(padding: .all(16))` | `EdgeInsets.zero`, `EdgeInsets.all(spacing)`, the `devicePixelRatio` of `EdgeInsets.fromViewPadding` |
 | `avoid_sized_box_literals` | `SizedBox(height: 8)`, `SizedBox.square(dimension: 24)` | `SizedBox.shrink()`, `SizedBox.expand()`, `SizedBox()`, `SizedBox(width: double.infinity)` |
 | `avoid_ui_string_literals` | `Text('Sign in')` and string literals passed to the Flutter parameters `tooltip`, `semanticsLabel`, `semanticLabel`, `hintText` and `labelText` | `Text(l10n.signIn)`, `Text('')`, `Text('$count')`, `Text('•')` |
 
@@ -39,15 +39,21 @@ Details:
 
 - A numeric literal is a number written in code, also negated, in parentheses
   or in arithmetic of literals only (`-8`, `(4)`, `8 * 2`). `spacing * 2` is
-  not a literal. A constructor call is reported once, however many literals
-  it has.
+  not a literal. A literal in a branch of `?:`, `??` or a `switch` expression
+  counts (`isWide ? 24 : 16`). A constructor call is reported once, however
+  many literals it has.
+- The redirecting factories of `EdgeInsetsGeometry` are checked as the
+  `EdgeInsets` or `EdgeInsetsDirectional` constructor they create.
 - A string is reported when its literal text has a letter in any script;
-  interpolated values are not literal text. Interpolations, adjacent strings
-  and both branches of a conditional (`ok ? 'Yes' : 'No'`) are checked.
+  interpolated values are not literal text. Interpolations, adjacent strings,
+  branches of `?:`, `??` and `switch` expressions (`name ?? 'Guest'`) and
+  operands of `+` (`'Total: ' + total`) are checked.
 - Only APIs declared in Flutter (`package:flutter` and `dart:ui`) are
   checked, so your own `Color`, `Text` or `hintText` are not reported. A
   `super.tooltip` parameter of your widget is followed to the Flutter
   parameter it forwards to.
+- References in doc comments (`/// Defaults to [Colors.blue].`) are not
+  reported.
 - Only files in `lib/` are checked. Tests, tools and examples may use
   literals.
 - Generated files are checked like any other file in `lib/`; exclude them
@@ -94,11 +100,16 @@ arrive and does not show them. Use `dart analyze --fatal-infos` in CI.
 
 ## Versioning
 
-The plugin depends on the exact `analyzer` version that its
-`analysis_server_plugin` release requires, which moves with the Dart SDK, so
-the package stays below 1.0.0 for now. A release that enables a new rule or
-reports more cases is a minor release (`0.x.0`); fixes that report fewer false
-positives are patch releases.
+The plugin depends on the `analyzer` version that its `analysis_server_plugin`
+release requires, which moves with the Dart SDK, so the package stays below
+1.0.0 for now. Before 1.0.0:
+
+| Change | Version |
+|---|---|
+| A new rule, or a rule that reports more cases | minor (`0.x.0`) |
+| Fewer false positives, fixes, documentation | patch (`0.x.y`) |
+
+A patch upgrade therefore never adds diagnostics to code that passed before.
 
 ## License
 

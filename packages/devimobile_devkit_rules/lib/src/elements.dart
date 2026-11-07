@@ -43,6 +43,18 @@ InterfaceElement? declaringClass(Element? element) {
   };
 }
 
+/// The constructor that [constructor] redirects to, followed to the end.
+ConstructorElement redirectTarget(ConstructorElement constructor) {
+  var target = constructor;
+  final seen = <ConstructorElement>{};
+  while (seen.add(target)) {
+    final next = target.redirectedConstructor?.baseElement;
+    if (next == null) break;
+    target = next;
+  }
+  return target;
+}
+
 /// The parameter that receives [argument], following `super.x` parameters
 /// to the constructor that declares them.
 FormalParameterElement? receivingParameter(Argument argument) {
@@ -67,15 +79,6 @@ const Set<TokenType> _arithmetic = {
   TokenType.PERCENT,
 };
 
-/// Whether [parent] only wraps a numeric [child] without adding a name:
-/// parentheses, a unary minus or arithmetic.
-bool isNumericWrapper(AstNode parent, AstNode child) => switch (parent) {
-  ParenthesizedExpression() => true,
-  PrefixExpression(:final operator) => operator.type == TokenType.MINUS,
-  BinaryExpression(:final operator) => _arithmetic.contains(operator.type),
-  _ => false,
-};
-
 /// Whether [expression] is built only from numeric literals, such as `16`,
 /// `-8.0`, `(4)` or `8 * 2`.
 bool isNumericLiteralExpression(Expression expression) => switch (expression) {
@@ -92,27 +95,73 @@ bool isNumericLiteralExpression(Expression expression) => switch (expression) {
   _ => false,
 };
 
-/// The numeric value of a literal, possibly in parentheses or negated.
-///
-/// Returns `null` for anything else, including arithmetic.
-num? numericLiteralValue(Expression expression) => switch (expression) {
-  IntegerLiteral(:final value) => value,
-  DoubleLiteral(:final value) => value,
-  ParenthesizedExpression(:final expression) => numericLiteralValue(expression),
-  PrefixExpression(:final operator, :final operand)
-      when operator.type == TokenType.MINUS =>
-    switch (numericLiteralValue(operand)) {
-      final num value => -value,
-      null => null,
-    },
-  _ => null,
+/// Whether some value that [expression] can take is a numeric literal
+/// expression: directly, or as a branch of `?:`, `??` or a `switch`.
+bool hasNumericLiteralOutcome(Expression expression) => switch (expression) {
+  ParenthesizedExpression(:final expression) => hasNumericLiteralOutcome(
+    expression,
+  ),
+  ConditionalExpression(:final thenExpression, :final elseExpression) =>
+    hasNumericLiteralOutcome(thenExpression) ||
+        hasNumericLiteralOutcome(elseExpression),
+  BinaryExpression(:final operator, :final leftOperand, :final rightOperand)
+      when operator.type == TokenType.QUESTION_QUESTION =>
+    hasNumericLiteralOutcome(leftOperand) ||
+        hasNumericLiteralOutcome(rightOperand),
+  SwitchExpression(:final cases) => cases.any(
+    (switchCase) => hasNumericLiteralOutcome(switchCase.expression),
+  ),
+  _ => isNumericLiteralExpression(expression),
 };
 
-/// Whether [parent] passes a string [child] through unchanged: parentheses
-/// or a branch of a conditional expression.
+/// The value of a numeric literal expression (see
+/// [isNumericLiteralExpression]), or `null` for anything else and for
+/// integer division by zero.
+num? numericValue(Expression expression) {
+  switch (expression) {
+    case IntegerLiteral(:final value):
+      return value;
+    case DoubleLiteral(:final value):
+      return value;
+    case ParenthesizedExpression(:final expression):
+      return numericValue(expression);
+    case PrefixExpression(:final operator, :final operand)
+        when operator.type == TokenType.MINUS:
+      final value = numericValue(operand);
+      return value == null ? null : -value;
+    case BinaryExpression(
+      :final operator,
+      :final leftOperand,
+      :final rightOperand,
+    ):
+      final left = numericValue(leftOperand);
+      final right = numericValue(rightOperand);
+      if (left == null || right == null) return null;
+      return switch (operator.type) {
+        TokenType.PLUS => left + right,
+        TokenType.MINUS => left - right,
+        TokenType.STAR => left * right,
+        TokenType.SLASH => left / right,
+        TokenType.TILDE_SLASH when right != 0 => left ~/ right,
+        TokenType.PERCENT when right != 0 => left % right,
+        _ => null,
+      };
+    default:
+      return null;
+  }
+}
+
+/// Whether a string [child] can end up as the value of [parent]:
+/// parentheses, a branch of `?:`, `??` or a `switch` expression, or an
+/// operand of `+`.
 bool isStringWrapper(AstNode parent, AstNode child) => switch (parent) {
   ParenthesizedExpression() => true,
   ConditionalExpression(:final condition) => child != condition,
+  BinaryExpression(:final operator) =>
+    operator.type == TokenType.QUESTION_QUESTION ||
+        operator.type == TokenType.PLUS,
+  SwitchExpressionCase(:final expression) => identical(child, expression),
+  SwitchExpression() => child is SwitchExpressionCase,
   _ => false,
 };
 

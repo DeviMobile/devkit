@@ -40,7 +40,10 @@ class AvoidMaterialColors extends AnalysisRule {
     RuleContext context,
   ) {
     if (!context.isInLibDir) return;
-    registry.addSimpleIdentifier(this, _Visitor(this));
+    final visitor = _Visitor(this);
+    registry
+      ..addPrefixedIdentifier(this, visitor)
+      ..addPropertyAccess(this, visitor);
   }
 }
 
@@ -50,19 +53,19 @@ class _Visitor extends SimpleAstVisitor<void> {
   final AvoidMaterialColors rule;
 
   @override
-  void visitSimpleIdentifier(SimpleIdentifier node) {
-    final element = node.element;
-    final type = declaringClass(element);
+  void visitPrefixedIdentifier(PrefixedIdentifier node) =>
+      _check(node, node.identifier);
+
+  @override
+  void visitPropertyAccess(PropertyAccess node) =>
+      _check(node, node.propertyName);
+
+  void _check(Expression node, SimpleIdentifier member) {
+    final type = declaringClass(member.element);
     if (type == null || type.name != 'Colors' || !isFromFlutter(type)) return;
-    if (AvoidMaterialColors.allowed.contains(node.name)) return;
-    final parent = node.parent;
-    final reported = switch (parent) {
-      PrefixedIdentifier(:final identifier) when identical(identifier, node) =>
-        parent,
-      PropertyAccess(:final propertyName) when identical(propertyName, node) =>
-        parent,
-      _ => node,
-    };
-    rule.reportAtNode(reported, arguments: [node.name]);
+    if (AvoidMaterialColors.allowed.contains(member.name)) return;
+    // `/// Defaults to [Colors.blue].` is documentation, not a use.
+    if (node.thisOrAncestorOfType<CommentReference>() != null) return;
+    rule.reportAtNode(node, arguments: [member.name]);
   }
 }

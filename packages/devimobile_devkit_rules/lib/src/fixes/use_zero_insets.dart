@@ -54,7 +54,7 @@ class UseZeroInsets extends ResolvedCorrectionProducer {
     if (arguments == null || arguments.arguments.isEmpty) return;
     final allZero = arguments.arguments
         .map(argumentValue)
-        .every((value) => numericLiteralValue(value) == 0);
+        .every((value) => numericValue(value) == 0);
     if (!allZero) return;
 
     _replacement = '$typeName.zero';
