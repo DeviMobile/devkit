@@ -1,5 +1,5 @@
 {
   "packages/devimobile_devkit_cli": "0.1.0",
   "packages/devimobile_devkit_lints": "0.1.0",
-  "packages/devimobile_devkit_rules": "0.1.0"
+  "packages/devimobile_devkit_rules": "0.1.1"
 }
