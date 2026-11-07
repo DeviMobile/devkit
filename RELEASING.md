@@ -2,6 +2,19 @@
 
 ## Normal flow
 
+Every release goes `develop` → `main` → tag → publish:
+
+- Work goes through `feat/*`, `fix/*`, `chore/*` or `ci/*` branches and
+  squash-merged pull requests into `develop`.
+- `main` only receives squash-merged `develop` → `main` pull requests. After
+  each one, `main` is merged back into `develop` with a merge commit (allow
+  merge commits in the repository settings for that one pull request), so the
+  next `develop` → `main` pull request shows only new commits.
+- Release Please runs on pushes to `main` and opens release pull requests
+  against `main` (`target-branch: main`). Tags are only created on `main`
+  commits. A release pull request opened against `develop` is closed, not
+  merged.
+
 1. Pull requests are squash-merged; the PR title (Conventional Commits) becomes
    the commit message. The title type decides the version bump of the package
    whose files changed:
@@ -19,8 +32,8 @@
    existing code needs the `!`: a caret constraint on `0.x` then never brings
    new diagnostics.
 
-2. Release Please keeps one release PR per package. Merging it tags
-   `<package>-vX.Y.Z` and creates a GitHub release.
+2. Release Please keeps one release PR per package against `main`. Merging
+   it tags `<package>-vX.Y.Z` and creates a GitHub release.
 3. The tag starts `publish-<package>.yml`: it checks that the tag matches
    `pubspec.yaml`, waits for approval in the `pub.dev` environment and
    publishes through pub.dev automated publishing (OIDC, no stored token).
