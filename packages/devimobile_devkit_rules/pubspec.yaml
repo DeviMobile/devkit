@@ -1,6 +1,6 @@
 name: devimobile_devkit_rules
 description: Analyzer plugin for Flutter apps that reports hard-coded colors, spacing and UI strings, so design tokens and localization stay the only source.
-version: 0.1.0
+version: 0.1.1
 repository: https://github.com/DeviMobile/devkit/tree/main/packages/devimobile_devkit_rules
 issue_tracker: https://github.com/DeviMobile/devkit/issues
 topics:
