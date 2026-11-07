@@ -51,6 +51,7 @@ class RuleTester {
     String packageName = 'test',
   }) {
     setUp(() {
+      _baseOptions = null;
       _harness = _Harness(create(), packageName)..setUp();
     });
     tearDown(() => _harness.tearDown());
@@ -83,14 +84,35 @@ class RuleTester {
     return _harness.assertDiagnostics(code, expected);
   }
 
-  /// Appends [yaml] to the `analysis_options.yaml` of the test package,
-  /// which is the options file of the analysis context root.
-  void addAnalysisOptions(String yaml) {
+  String? _baseOptions;
+
+  /// Sets [yaml] as the extra content of the test package's
+  /// `analysis_options.yaml`, after what `analyzer_testing` writes there.
+  void setAnalysisOptions(String yaml) {
     final path = _harness.convertPath(
       '${_harness.testPackageRootPath}/analysis_options.yaml',
     );
-    final content = _harness.getFile(path).readAsStringSync();
-    _harness.newFile(path, '$content\n$yaml');
+    final base = _baseOptions ??= _harness.getFile(path).readAsStringSync();
+    _harness.newFile(path, '$base\n$yaml');
+  }
+
+  /// Like [setAnalysisOptions], but after an analysis: writes the file
+  /// directly, as an editor would, without telling the analyzer, so only
+  /// code that reads the file itself sees the change.
+  void rewriteAnalysisOptions(String yaml) {
+    final path = _harness.convertPath(
+      '${_harness.testPackageRootPath}/analysis_options.yaml',
+    );
+    _harness.getFile(path).writeAsStringSync('$_baseOptions\n$yaml');
+  }
+
+  /// Writes [content] to [path], relative to the workspace root that
+  /// contains the test package (`/home`).
+  void writeWorkspaceFile(String path, String content) {
+    _harness.newFile(
+      _harness.convertPath('${_harness.workspaceRootPath}/$path'),
+      content,
+    );
   }
 
   /// Expects no diagnostics in [code].
@@ -106,8 +128,12 @@ class RuleTester {
 
   /// Adds a library at `package:other_ui/[path]`, a package that is not
   /// Flutter.
-  void addOtherPackageFile(String path, String code) {
-    _harness.newFile(_harness.convertPath('/package/other_ui/$path'), code);
+  void addOtherPackageFile(String path, String code) =>
+      writeOtherPackageFile(path, code);
+
+  /// Writes [content] to [path] in the `other_ui` package.
+  void writeOtherPackageFile(String path, String content) {
+    _harness.newFile(_harness.convertPath('/package/other_ui/$path'), content);
   }
 
   /// Applies the fix created by [create] to the first diagnostic in [code].

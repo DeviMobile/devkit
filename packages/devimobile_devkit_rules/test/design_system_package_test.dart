@@ -39,7 +39,7 @@ void main() {
       });
 
       test('reports again when the list is empty', () async {
-        tester.addAnalysisOptions('''
+        tester.setAnalysisOptions('''
 devimobile_devkit_rules:
   design_system_packages: []
 ''');
@@ -55,7 +55,7 @@ devimobile_devkit_rules:
       });
 
       test('reports nothing when the package is listed', () async {
-        tester.addAnalysisOptions('''
+        tester.setAnalysisOptions('''
 devimobile_devkit_rules:
   design_system_packages:
     - tokens
@@ -73,7 +73,7 @@ devimobile_devkit_rules:
     );
 
     test('so design_system is checked when not listed', () async {
-      tester.addAnalysisOptions('''
+      tester.setAnalysisOptions('''
 devimobile_devkit_rules:
   design_system_packages: brand_ui
 ''');
@@ -85,9 +85,88 @@ devimobile_devkit_rules:
     final tester = RuleTester(AvoidColorLiterals.new, packageName: 'mobile');
 
     test('is checked next to a listed design system', () async {
-      tester.addAnalysisOptions('''
+      tester.setAnalysisOptions('''
 devimobile_devkit_rules:
   design_system_packages: [design_system]
+''');
+      await tester.expectLints(_code, ['Color(0xFF000000)']);
+    });
+  });
+
+  group('a package whose options file includes the root file', () {
+    final tester = RuleTester(AvoidColorLiterals.new, packageName: 'brand_ui');
+
+    test('reads the key from the included file', () async {
+      tester
+        ..writeWorkspaceFile('analysis_options.yaml', '''
+devimobile_devkit_rules:
+  design_system_packages: [brand_ui]
+''')
+        ..setAnalysisOptions('include: ../analysis_options.yaml');
+      await tester.expectNone(_code);
+    });
+
+    test('follows a chain of includes and a list of includes', () async {
+      tester
+        ..writeWorkspaceFile('shared/base.yaml', '''
+devimobile_devkit_rules:
+  design_system_packages: brand_ui
+''')
+        ..writeWorkspaceFile('shared/app.yaml', 'include: base.yaml\n')
+        ..writeWorkspaceFile('shared/empty.yaml', 'linter:\n')
+        ..setAnalysisOptions('''
+include:
+  - ../shared/app.yaml
+  - ../shared/empty.yaml
+''');
+      await tester.expectNone(_code);
+    });
+
+    test('reads a package: include', () async {
+      tester
+        ..writeOtherPackageFile('lib/rules.yaml', '''
+devimobile_devkit_rules:
+  design_system_packages: [brand_ui]
+''')
+        ..setAnalysisOptions('include: package:other_ui/rules.yaml');
+      await tester.expectNone(_code);
+    });
+
+    test('prefers the key of the including file', () async {
+      tester
+        ..writeWorkspaceFile('analysis_options.yaml', '''
+devimobile_devkit_rules:
+  design_system_packages: [brand_ui]
+''')
+        ..setAnalysisOptions('''
+include: ../analysis_options.yaml
+devimobile_devkit_rules:
+  design_system_packages: [tokens]
+''');
+      await tester.expectLints(_code, ['Color(0xFF000000)']);
+    });
+
+    test('stops at an include cycle and uses the default', () async {
+      tester
+        ..writeWorkspaceFile('a.yaml', 'include: b.yaml\n')
+        ..writeWorkspaceFile('b.yaml', 'include: a.yaml\n')
+        ..setAnalysisOptions('include: ../a.yaml');
+      await tester.expectLints(_code, ['Color(0xFF000000)']);
+    });
+  });
+
+  group('a changed options file', () {
+    final tester = RuleTester(AvoidColorLiterals.new, packageName: 'brand_ui');
+
+    test('is read again', () async {
+      tester.setAnalysisOptions('''
+devimobile_devkit_rules:
+  design_system_packages: [brand_ui]
+''');
+      await tester.expectNone(_code);
+      tester.rewriteAnalysisOptions('''
+devimobile_devkit_rules:
+  design_system_packages: []
 ''');
       await tester.expectLints(_code, ['Color(0xFF000000)']);
     });

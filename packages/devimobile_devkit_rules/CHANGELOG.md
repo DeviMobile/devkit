@@ -7,5 +7,5 @@
   `avoid_sized_box_literals` and `avoid_ui_string_literals`, and a quick fix
   that replaces all-zero insets with `EdgeInsets.zero`.
 - The rules skip design system packages, `design_system` by default or the
-  names under `devimobile_devkit_rules: design_system_packages:` in the root
-  `analysis_options.yaml`.
+  names under `devimobile_devkit_rules: design_system_packages:` in
+  `analysis_options.yaml`, followed through `include:`.
