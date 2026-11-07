@@ -13,6 +13,9 @@
     },
     "packages/devimobile_devkit_lints": {
       "component": "devimobile_devkit_lints"
+    },
+    "packages/devimobile_devkit_rules": {
+      "component": "devimobile_devkit_rules"
     }
   }
 }

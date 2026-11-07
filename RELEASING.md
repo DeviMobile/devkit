@@ -32,9 +32,10 @@ are skipped.
    ```sh
    (cd packages/devimobile_devkit_lints && dart pub publish)
    (cd packages/devimobile_devkit_cli && dart pub publish)
+   (cd packages/devimobile_devkit_rules && dart pub publish)
    ```
 
-   Then, on pub.dev, transfer both packages to the `devimobile.pl` publisher.
+   Then, on pub.dev, transfer the packages to the `devimobile.pl` publisher.
 3. **Baseline for Release Please**: create a GitHub release for each 0.1.0 on
    that same commit, so Release Please starts from there instead of proposing
    0.1.x for the whole history:
@@ -42,6 +43,7 @@ are skipped.
    ```sh
    gh release create devimobile_devkit_lints-v0.1.0 --target <sha> --title "devimobile_devkit_lints 0.1.0" --notes "Initial release."
    gh release create devimobile_devkit_cli-v0.1.0 --target <sha> --title "devimobile_devkit_cli 0.1.0" --notes "Initial release."
+   gh release create devimobile_devkit_rules-v0.1.0 --target <sha> --title "devimobile_devkit_rules 0.1.0" --notes "Initial release."
    ```
 
    The new tags start the publish workflows, which fail at publishing because
@@ -59,5 +61,5 @@ are skipped.
 7. **Branch protection** on `main`: require the checks `Format, analyze,
    generated files`, `Tests (ubuntu-latest)`, `Tests (macos-latest)`,
    `Minimum Dart SDK`, `Lint catalog of the latest stable SDK`,
-   `Publish dry run and pana` (both packages) and `Conventional Commits title`;
+   `Publish dry run and pana` (every package) and `Conventional Commits title`;
    allow squash merge only, with the PR title as the commit message.
