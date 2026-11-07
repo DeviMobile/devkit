@@ -6,6 +6,7 @@ Development tooling for Dart and Flutter projects, published on pub.dev.
 |---|---|
 | [`devimobile_devkit_cli`](packages/devimobile_devkit_cli) | `devkit test` and `devkit coverage` for pub workspaces |
 | [`devimobile_devkit_lints`](packages/devimobile_devkit_lints) | Lint rule sets with a documented decision for every SDK rule |
+| [`devimobile_devkit_rules`](packages/devimobile_devkit_rules) | Analyzer plugin that reports hard-coded colors, spacing and UI text in Flutter apps |
 
 ## Development
 
