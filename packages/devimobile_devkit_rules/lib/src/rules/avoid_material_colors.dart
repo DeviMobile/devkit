@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:devimobile_devkit_rules/src/elements.dart';
+import 'package:devimobile_devkit_rules/src/scope.dart';
 
 /// Reports the Material palette, such as `Colors.blue`.
 ///
@@ -39,7 +40,7 @@ class AvoidMaterialColors extends AnalysisRule {
     RuleVisitorRegistry registry,
     RuleContext context,
   ) {
-    if (!context.isInLibDir) return;
+    if (!isChecked(context)) return;
     final visitor = _Visitor(this);
     registry
       ..addPrefixedIdentifier(this, visitor)

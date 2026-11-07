@@ -4,6 +4,7 @@ import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer_plugin/protocol/protocol_common.dart';
 import 'package:analyzer_plugin/utilities/change_builder/change_builder_core.dart';
 import 'package:analyzer_testing/analysis_rule/analysis_rule.dart';
+import 'package:analyzer_testing/package_config_file_builder.dart';
 import 'package:test/test.dart';
 
 /// Flutter APIs that the mock Flutter package of `analyzer_testing` lacks.
@@ -43,9 +44,15 @@ class InputDecoration {
 /// mock Flutter SDK; one instance per test, created in `setUp`.
 class RuleTester {
   /// Registers `setUp` and `tearDown` that create the rule with [create].
-  RuleTester(AbstractAnalysisRule Function() create) {
+  ///
+  /// The code under test lives in `lib/` of a package named [packageName].
+  RuleTester(
+    AbstractAnalysisRule Function() create, {
+    String packageName = 'test',
+  }) {
     setUp(() {
-      _harness = _Harness(create())..setUp();
+      _baseOptions = null;
+      _harness = _Harness(create(), packageName)..setUp();
     });
     tearDown(() => _harness.tearDown());
   }
@@ -77,6 +84,37 @@ class RuleTester {
     return _harness.assertDiagnostics(code, expected);
   }
 
+  String? _baseOptions;
+
+  /// Sets [yaml] as the extra content of the test package's
+  /// `analysis_options.yaml`, after what `analyzer_testing` writes there.
+  void setAnalysisOptions(String yaml) {
+    final path = _harness.convertPath(
+      '${_harness.testPackageRootPath}/analysis_options.yaml',
+    );
+    final base = _baseOptions ??= _harness.getFile(path).readAsStringSync();
+    _harness.newFile(path, '$base\n$yaml');
+  }
+
+  /// Like [setAnalysisOptions], but after an analysis: writes the file
+  /// directly, as an editor would, without telling the analyzer, so only
+  /// code that reads the file itself sees the change.
+  void rewriteAnalysisOptions(String yaml) {
+    final path = _harness.convertPath(
+      '${_harness.testPackageRootPath}/analysis_options.yaml',
+    );
+    _harness.getFile(path).writeAsStringSync('$_baseOptions\n$yaml');
+  }
+
+  /// Writes [content] to [path], relative to the workspace root that
+  /// contains the test package (`/home`).
+  void writeWorkspaceFile(String path, String content) {
+    _harness.newFile(
+      _harness.convertPath('${_harness.workspaceRootPath}/$path'),
+      content,
+    );
+  }
+
   /// Expects no diagnostics in [code].
   Future<void> expectNone(String code) => _harness.assertNoDiagnostics(code);
 
@@ -90,8 +128,12 @@ class RuleTester {
 
   /// Adds a library at `package:other_ui/[path]`, a package that is not
   /// Flutter.
-  void addOtherPackageFile(String path, String code) {
-    _harness.newFile(_harness.convertPath('/package/other_ui/$path'), code);
+  void addOtherPackageFile(String path, String code) =>
+      writeOtherPackageFile(path, code);
+
+  /// Writes [content] to [path] in the `other_ui` package.
+  void writeOtherPackageFile(String path, String content) {
+    _harness.newFile(_harness.convertPath('/package/other_ui/$path'), content);
   }
 
   /// Applies the fix created by [create] to the first diagnostic in [code].
@@ -128,8 +170,29 @@ class RuleTester {
 }
 
 class _Harness extends AnalysisRuleTest {
-  _Harness(AbstractAnalysisRule rule) {
+  _Harness(AbstractAnalysisRule rule, this.packageName) {
     this.rule = rule;
+  }
+
+  /// The name of the package under test (`test` in `analyzer_testing`).
+  final String packageName;
+
+  @override
+  void writeTestPackageConfig2({
+    PackageConfigFileBuilder? config,
+    String? languageVersion,
+  }) {
+    final copy = (config ?? PackageConfigFileBuilder()).copy()
+      ..add(
+        name: 'other_ui',
+        rootFolder: getFolder(convertPath('/package/other_ui')),
+      );
+    writePackageConfig2(
+      testPackageRootPath,
+      config: copy,
+      languageVersion: languageVersion,
+      packageName: packageName,
+    );
   }
 
   @override
@@ -137,8 +200,8 @@ class _Harness extends AnalysisRuleTest {
 
   @override
   void setUp() {
-    newPackage('other_ui');
     super.setUp();
+    newPubspecYamlFile(testPackageRootPath, 'name: $packageName\n');
     final flutterLib = '$packagesRootPath/flutter/lib';
     newFile('$flutterLib/src/devkit_extras.dart', _flutterExtras);
     _insert(

@@ -54,7 +54,8 @@ Details:
   parameter it forwards to.
 - References in doc comments (`/// Defaults to [Colors.blue].`) are not
   reported.
-- Only files in `lib/` are checked. Tests, tools and examples may use
+- Only files in `lib/` are checked, and not in design system packages (see
+  [Design system packages](#design-system-packages)). Tests, tools and examples may use
   literals.
 - Generated files are checked like any other file in `lib/`; exclude them
   with `analyzer: exclude:` as usual.
@@ -85,13 +86,46 @@ Suppress a single diagnostic with the plugin name in front of the rule:
 // ignore: devimobile_devkit_rules/avoid_material_colors
 ```
 
+### Design system packages
+
+The package that defines the design tokens has to use raw values, so the rules
+skip the files of packages named `design_system`. Name your own design system
+packages under the top-level `devimobile_devkit_rules:` key of
+`analysis_options.yaml`, usually next to `plugins:` in the workspace root:
+
+```yaml
+plugins:
+  devimobile_devkit_rules: ^0.1.0
+
+devimobile_devkit_rules:
+  design_system_packages:
+    - brand_ui
+```
+
+- The list replaces the default, so add `design_system` if you still want it
+  skipped; a single name works too (`design_system_packages: brand_ui`), and
+  an empty list checks every package.
+- For each file, the key is looked up in the nearest `analysis_options.yaml`
+  (in the file's folder or above) and then in the files it includes,
+  relative or `package:`. The including file wins, as in the analyzer, and a
+  member whose file only has `include: ../../analysis_options.yaml` gets the
+  root's list. Include cycles are cut.
+- A missing or invalid value falls back to `design_system`. Invalid values
+  are not reported.
+- A package is matched by the `name` in its `pubspec.yaml`, so a dependency
+  called `design_system` does not matter: files outside your workspace are
+  not analyzed.
+
 ### Pub workspaces
 
-Plugins can only be listed in the `analysis_options.yaml` at the root of a
-workspace. A member package gets the plugin when its own
-`analysis_options.yaml` includes the root file (or when it has none). A
-package that keeps its own options without that include, such as a design
-system that defines the colors and spacing, is not checked.
+Observed with Dart 3.13.7 (Flutter 3.47.9): `dart analyze` reports
+`plugins` in a member's `analysis_options.yaml` as a warning ("Plugins can
+only be specified in the root of a pub workspace…") and the plugin does not
+run for that member. With `plugins:` in the root file, a member is checked
+when it has no `analysis_options.yaml` of its own or when its file includes
+the root file (`include: ../../analysis_options.yaml`); a member whose own
+file does not include the root file is not checked. Keep the design system
+in the include and list it in `design_system_packages`.
 
 ### `flutter analyze`
 
