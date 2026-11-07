@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:devimobile_devkit_rules/src/elements.dart';
+import 'package:devimobile_devkit_rules/src/scope.dart';
 
 /// A rule that reports constructor invocations of selected classes with a
 /// numeric literal argument, once per invocation.
@@ -27,7 +28,7 @@ abstract class NumericArgumentRule extends AnalysisRule {
     RuleVisitorRegistry registry,
     RuleContext context,
   ) {
-    if (!context.isInLibDir) return;
+    if (!isChecked(context)) return;
     registry.addArgumentList(this, _Visitor(this));
   }
 }

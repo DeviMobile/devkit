@@ -6,6 +6,7 @@ import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:devimobile_devkit_rules/src/elements.dart';
+import 'package:devimobile_devkit_rules/src/scope.dart';
 
 /// Reports user-facing text written as a string literal: the text of
 /// `Text('…')` and the Flutter parameters `tooltip`, `semanticsLabel`,
@@ -48,7 +49,7 @@ class AvoidUiStringLiterals extends AnalysisRule {
     RuleVisitorRegistry registry,
     RuleContext context,
   ) {
-    if (!context.isInLibDir) return;
+    if (!isChecked(context)) return;
     final visitor = _Visitor(this);
     registry
       ..addSimpleStringLiteral(this, visitor)
